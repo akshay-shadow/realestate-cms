@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --c-primary: 176 141 87;
+  --c-primary-fg: 255 255 255;
+  --c-secondary: 31 42 55;
+  --c-accent: 232 216 185;
+  --c-surface: 255 255 255;
+  --c-surface-alt: 247 244 239;
+  --c-ink: 17 24 39;
+  --c-muted: 107 114 128;
+  --c-heading: 17 24 39;
+  --font-heading: Georgia, serif;
+  --font-body: system-ui, sans-serif;
+  --radius: 10px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.site {
+  @apply bg-surface font-body text-ink antialiased;
+}
+.site h1,
+.site h2,
+.site h3 {
+  @apply font-heading;
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+  .section {
+    @apply scroll-mt-20 py-16 md:py-24;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-theme px-6 py-3 text-sm font-semibold tracking-wide transition disabled:opacity-60;
+  }
+  .btn-primary {
+    @apply btn bg-primary text-primary-fg hover:brightness-110;
+  }
+  .btn-outline {
+    @apply btn border border-current hover:bg-white/10;
+  }
+  .btn-primary-outline {
+    @apply btn border border-primary text-primary hover:bg-primary hover:text-primary-fg;
+  }
+  .card {
+    @apply rounded-theme bg-surface-alt ring-1 ring-ink/10;
+  }
+  .eyebrow {
+    @apply mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-primary;
+  }
+  .heading {
+    @apply text-2xl font-semibold leading-tight text-heading md:text-3xl lg:text-4xl;
+  }
+  /* Admin panel (neutral, not affected by site theme) */
+  .admin-input {
+    @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20;
+  }
+  .admin-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500 disabled:opacity-60;
+  }
+  .admin-btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 disabled:opacity-60;
+  }
+  .admin-card {
+    @apply rounded-xl border border-slate-200 bg-white p-5 shadow-sm;
+  }
+  .input {
+    @apply w-full rounded-theme border border-black/10 bg-white px-4 py-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/20;
+  }
+}
