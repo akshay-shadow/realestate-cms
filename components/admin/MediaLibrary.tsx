@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { useSupabase } from "@/lib/supabase/client";
 
 const BUCKET = "media";
 
@@ -27,7 +27,7 @@ export function MediaLibrary({
   accept?: "image" | "video" | "file";
   onSelect?: (url: string) => void;
 }) {
-  const supabase = useRef(createClient()).current;
+  const supabase = useSupabase();
   const inputRef = useRef<HTMLInputElement>(null);
   const [files, setFiles] = useState<MediaFile[]>([]);
   const [loading, setLoading] = useState(true);
