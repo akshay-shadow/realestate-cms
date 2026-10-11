@@ -25,7 +25,8 @@ Every "Download …" or "Request …" button opens the lead form, and the lead's
 - **Fully dynamic content** lives in one JSON document per site (`sites.content`):
   brand, SEO (meta, OG image, noindex), theme colours, Google Fonts, corner radius, section order and visibility, navigation, all section content, popup, brochure, footer, privacy policy, plus GA4 / GTM / Meta Pixel IDs.
 - **Admin panel:** dashboard, leads (search, filter, status pipeline, notes, CSV export), auto-generated content editors, media library (drag-and-drop upload to Supabase Storage), and JSON import/export for cloning sites.
-- **SEO:** metadata, Open Graph/Twitter cards, JSON-LD (RealEstateListing + FAQPage), `robots.txt`, `sitemap.xml`, ISR caching (pages refresh as soon as you save in the admin).
+- **SEO:** metadata, Open Graph/Twitter cards, JSON-LD (RealEstateListing + FAQPage), `robots.txt`, `sitemap.xml`, all using the domain the site is served on.
+- **Multi-site:** one deployment serves every client. Each site is picked by the domain it's opened on (`sites.domains`).
 - **Conversion tracking:** submissions fire `generate_lead` (GA4), `Lead` (Meta Pixel) and `lead_submit` (GTM dataLayer). An optional `/thank-you` redirect is available for ad conversion goals.
 
 ## Setup (about 10 minutes)
@@ -74,23 +75,27 @@ The result of each send (`sent` / `failed (...)`) appears with the lead under **
 
 ## Launching a site for a new client
 
-**Option A: same Supabase project, new deployment** (one admin login can manage many sites)
-1. In the SQL Editor:
+One deployment serves every client. Each request is matched to a site by its domain (`sites.domains`). Domains not listed on any site, such as `localhost` and `*.workers.dev`, show `DEFAULT_SITE_SLUG`.
+
+1. In the SQL Editor, create the site, list its domains and give someone admin access:
    ```sql
-   insert into public.sites (slug) values ('client2');
+   insert into public.sites (slug, domains) values ('client2', '{client2.com,www.client2.com}');
    insert into public.site_admins (site_id, user_id)
    select s.id, u.id from public.sites s, auth.users u
    where s.slug = 'client2' and u.email = 'client-or-you@example.com';
    ```
-2. Deploy the same repo again (for example as a new Vercel project) with `NEXT_PUBLIC_SITE_SLUG=client2`, the client's domain in `NEXT_PUBLIC_SITE_URL`, and their WhatsApp variables.
-3. *(Optional)* On the old site, go to **Admin → Import / Export** and download the content. Import it on the new site, then edit.
+   For a new admin login, first add the user under **Authentication → Users**.
+2. Add the domain to the deployment. On Cloudflare: **Worker → Settings → Domains & Routes → Add → Custom domain**, once for `client2.com` and once for `www.client2.com`. The domain must be on your Cloudflare account; see below.
+3. The client manages their site at `https://client2.com/admin`.
+4. *(Optional)* To start from an existing site: open **Admin → Import / Export** on that site and download the content, then import it on the new one and edit.
 
-**Option B: separate Supabase project per client.** Repeat the setup with fresh keys. This gives full data isolation.
+To link more domains to an existing site:
+```sql
+update public.sites set domains = '{skyline.com,www.skyline.com}' where slug = 'demo';
+```
+Domains are matched exactly and in lowercase, so list both the bare and `www.` versions.
 
-## Deploying (Vercel)
-1. Push the repo to GitHub and import it on Vercel.
-2. Add all environment variables from `.env.example`.
-3. Add the client's domain under Vercel → Domains.
+WhatsApp API credentials (`WHATSAPP_*`) are per deployment, so every site sends alerts from the same business number. The numbers that receive the alerts are set per site in **Admin → Settings → WhatsApp**.
 
 ## Deploying (Cloudflare Workers)
 The app runs on Workers through the [OpenNext adapter](https://opennext.js.org/cloudflare). Config is in [wrangler.jsonc](wrangler.jsonc) and [open-next.config.ts](open-next.config.ts).
@@ -98,13 +103,14 @@ The app runs on Workers through the [OpenNext adapter](https://opennext.js.org/c
 **From GitHub (auto-deploys on push):**
 1. Cloudflare dashboard → **Workers & Pages → Create → Import a repository**, and pick this repo.
 2. Build command: `npx opennextjs-cloudflare build`. Deploy command: `npx opennextjs-cloudflare deploy`.
-3. Under **Settings → Build → Variables and secrets**, add the `NEXT_PUBLIC_*` variables. They are baked in at build time.
+3. Under **Settings → Build → Variables and secrets**, add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`. They are baked in at build time.
 4. Under **Settings → Variables and Secrets** (runtime), add every variable from `.env.example`. Add `SUPABASE_SERVICE_ROLE_KEY` and `WHATSAPP_TOKEN` as type *Secret*.
-5. Add the client's domain under **Settings → Domains & Routes**.
+
+**Client domains:** a Worker custom domain must be a zone on your Cloudflare account. Either add the client's domain to your account (**Add a site**, then have the client change their nameservers to Cloudflare's), or ask the client to add you as a member of their Cloudflare account. Then add it under **Settings → Domains & Routes**. Cloudflare issues the SSL certificate automatically.
 
 **From your machine:** `npm run deploy` (runs `wrangler login` the first time). `npm run preview` runs the Workers build locally.
 
-The worker name in `wrangler.jsonc` must match the Worker name in the dashboard. Use a different name per client deployment.
+The worker name in `wrangler.jsonc` must match the Worker name in the dashboard.
 
 ## Adding a new editable field
 
@@ -126,7 +132,7 @@ components/
 lib/
   content/           types, defaults, admin editor schema
   supabase/          server / browser / service clients
-  site.ts            loads the site content for this deployment
+  site.ts            picks the site for the request's domain and loads its content
   whatsapp.ts        WhatsApp Cloud API sender
 supabase/schema.sql  database, RLS and storage setup
 ```

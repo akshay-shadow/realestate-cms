@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Sidebar } from "@/components/admin/Sidebar";
 import { getAdmin } from "@/lib/admin";
-import { SITE_SLUG } from "@/lib/site";
 import { signOut } from "../actions";
 
 export const dynamic = "force-dynamic";
@@ -28,7 +27,7 @@ export default async function PanelLayout({ children }: { children: React.ReactN
 
   return (
     <div className="min-h-screen bg-slate-100 text-slate-900 lg:flex">
-      <Sidebar brandName={admin.content.brand.name} email={admin.email} slug={SITE_SLUG} signOut={signOut} />
+      <Sidebar brandName={admin.content.brand.name} email={admin.email} slug={admin.slug} signOut={signOut} />
       <main className="min-w-0 flex-1 p-4 md:p-8">{children}</main>
     </div>
   );

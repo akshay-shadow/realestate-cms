@@ -1,10 +1,11 @@
+import { headers } from "next/headers";
 import { cache } from "react";
 import { defaultContent } from "./content/defaults";
 import type { SiteContent } from "./content/types";
 import { createPublicClient, supabaseConfigured } from "./supabase/server";
 
-export const SITE_SLUG = process.env.NEXT_PUBLIC_SITE_SLUG || "demo";
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, "");
+/** Site shown when the request's domain isn't listed in any site's `domains` (localhost, *.workers.dev). */
+export const DEFAULT_SITE_SLUG = process.env.DEFAULT_SITE_SLUG || process.env.NEXT_PUBLIC_SITE_SLUG || "demo";
 
 type Plain = Record<string, unknown>;
 const isPlain = (v: unknown): v is Plain => typeof v === "object" && v !== null && !Array.isArray(v);
@@ -31,23 +32,50 @@ export function normalizeContent(saved: unknown): SiteContent {
 export interface Site {
   id: string | null;
   slug: string;
+  /** Origin the site is being served on, e.g. https://skyline.com */
+  url: string;
+  /** False when no site lists this domain and the DEFAULT_SITE_SLUG fallback was used. */
+  onOwnDomain: boolean;
   content: SiteContent;
 }
 
-/** Loads this deployment's site content, falling back to demo defaults. */
+/** The request's host and origin. `host` is null when the Host header looks malformed. */
+const getRequestHost = cache(async (): Promise<{ host: string | null; url: string }> => {
+  const h = await headers();
+  const raw = (h.get("x-forwarded-host") ?? h.get("host") ?? "").split(",")[0].trim().toLowerCase();
+  if (!/^[a-z0-9.-]+(:\d+)?$/.test(raw)) return { host: null, url: "http://localhost:3000" };
+
+  const host = raw.replace(/:\d+$/, "");
+  const local = host === "localhost" || host === "127.0.0.1";
+  const proto = h.get("x-forwarded-proto")?.split(",")[0].trim() === "http" || local ? "http" : "https";
+  return { host, url: `${proto}://${raw}` };
+});
+
+/** Loads the site for the requested domain, falling back to DEFAULT_SITE_SLUG, then to demo defaults. */
 export const getSite = cache(async (): Promise<Site> => {
-  if (!supabaseConfigured) return { id: null, slug: SITE_SLUG, content: defaultContent };
+  const { host, url } = await getRequestHost();
+  if (!supabaseConfigured) return { id: null, slug: DEFAULT_SITE_SLUG, url, onOwnDomain: false, content: defaultContent };
 
-  const { data, error } = await createPublicClient()
-    .from("sites")
-    .select("id, slug, content")
-    .eq("slug", SITE_SLUG)
-    .maybeSingle();
+  const db = createPublicClient();
+  let data: { id: string; slug: string; content: unknown } | null = null;
 
-  if (error) console.error("Failed to load site content:", error.message);
+  if (host) {
+    const res = await db.from("sites").select("id, slug, content").contains("domains", [host]).limit(1).maybeSingle();
+    if (res.error) console.error("Failed to look up site by domain:", res.error.message);
+    data = res.data;
+  }
+  const onOwnDomain = Boolean(data);
+  if (!data) {
+    const res = await db.from("sites").select("id, slug, content").eq("slug", DEFAULT_SITE_SLUG).maybeSingle();
+    if (res.error) console.error("Failed to load site content:", res.error.message);
+    data = res.data;
+  }
+
   return {
     id: data?.id ?? null,
-    slug: SITE_SLUG,
+    slug: data?.slug ?? DEFAULT_SITE_SLUG,
+    url,
+    onOwnDomain,
     content: normalizeContent(data?.content),
   };
 });

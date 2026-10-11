@@ -11,6 +11,7 @@ create extension if not exists pgcrypto;
 create table if not exists public.sites (
   id          uuid primary key default gen_random_uuid(),
   slug        text unique not null,
+  domains     text[] not null default '{}',   -- e.g. {skyline.com,www.skyline.com}
   content     jsonb not null default '{}'::jsonb,
   created_at  timestamptz not null default now(),
   updated_at  timestamptz not null default now()
@@ -43,6 +44,7 @@ create table if not exists public.leads (
   created_at       timestamptz not null default now()
 );
 
+create index if not exists sites_domains_idx on public.sites using gin (domains);
 create index if not exists leads_site_created_idx on public.leads (site_id, created_at desc);
 
 -- ---------------------------------------------------------------------
@@ -161,4 +163,8 @@ insert into public.sites (slug) values ('demo') on conflict (slug) do nothing;
 -- insert into public.site_admins (site_id, user_id)
 -- select s.id, u.id from public.sites s, auth.users u
 -- where s.slug = 'demo' and u.email = 'you@example.com';
+--
+-- And point the site's domain(s) at it:
+--
+-- update public.sites set domains = '{skyline.com,www.skyline.com}' where slug = 'demo';
 -- ---------------------------------------------------------------------

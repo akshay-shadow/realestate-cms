@@ -4,16 +4,14 @@ import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
 import { Tracking } from "@/components/site/Tracking";
 import { WhatsAppFloat } from "@/components/site/WhatsAppFloat";
-import { getSite, SITE_URL } from "@/lib/site";
+import { getSite } from "@/lib/site";
 import { googleFontsHref, hexToRgb, RADIUS } from "@/lib/utils";
 
-export const revalidate = 3600;
-
 export async function generateMetadata(): Promise<Metadata> {
-  const { content } = await getSite();
+  const { content, url } = await getSite();
   const { seo, brand } = content;
   return {
-    metadataBase: new URL(SITE_URL),
+    metadataBase: new URL(url),
     title: { default: seo.title, template: `%s | ${brand.name}` },
     description: seo.description,
     keywords: seo.keywords,
@@ -37,7 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
-  const { content } = await getSite();
+  const { content, url } = await getSite();
   const t = content.theme;
   const font = (f: string) => f.replace(/[^\w\s-]/g, "");
 
@@ -62,7 +60,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
     "@type": "RealEstateListing",
     name: content.brand.name,
     description: content.seo.description,
-    url: SITE_URL,
+    url,
     image: content.seo.ogImage || undefined,
     address: content.brand.address,
     telephone: content.brand.phone,

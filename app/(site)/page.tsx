@@ -14,7 +14,6 @@ import { VirtualTour } from "@/components/site/sections/VirtualTour";
 import type { SectionKey, SiteContent } from "@/lib/content/types";
 import { getSite } from "@/lib/site";
 
-export const revalidate = 3600;
 
 const SECTIONS: Record<SectionKey, (p: { content: SiteContent }) => React.ReactNode> = {
   hero: Hero,

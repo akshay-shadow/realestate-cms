@@ -1,14 +1,12 @@
 import type { MetadataRoute } from "next";
-import { getSite, SITE_URL } from "@/lib/site";
-
-export const revalidate = 3600;
+import { getSite } from "@/lib/site";
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
-  const { content } = await getSite();
+  const { content, url } = await getSite();
   return {
     rules: content.seo.noindex
       ? { userAgent: "*", disallow: "/" }
       : { userAgent: "*", allow: "/", disallow: ["/admin", "/api", "/thank-you"] },
-    sitemap: `${SITE_URL}/sitemap.xml`,
+    sitemap: `${url}/sitemap.xml`,
   };
 }

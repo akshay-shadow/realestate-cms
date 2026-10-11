@@ -4,7 +4,7 @@ import { whatsappApiConfigured } from "@/lib/whatsapp";
 import { StatusBadge } from "@/components/admin/StatusBadge";
 
 export default async function DashboardPage() {
-  const { supabase, siteId, content } = await requireAdmin();
+  const { supabase, siteId, slug, onOwnDomain, content } = await requireAdmin();
 
   const now = new Date();
   const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString();
@@ -36,7 +36,12 @@ export default async function DashboardPage() {
         ? "WhatsApp Cloud API credentials set"
         : "WhatsApp auto-send is off (enable in Settings → WhatsApp)",
     },
-    { ok: Boolean(process.env.NEXT_PUBLIC_SITE_URL), label: "NEXT_PUBLIC_SITE_URL set (SEO canonical / sitemap)" },
+    {
+      ok: onOwnDomain,
+      label: onOwnDomain
+        ? "This domain is linked to the site"
+        : `This domain isn't in the "${slug}" site's domains list (showing the default site)`,
+    },
     { ok: Boolean(content.brochure.file) || !content.brochure.enabled, label: "Brochure file uploaded" },
   ];
 

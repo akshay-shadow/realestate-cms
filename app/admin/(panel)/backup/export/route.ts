@@ -1,5 +1,4 @@
 import { getAdmin } from "@/lib/admin";
-import { SITE_SLUG } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
@@ -10,7 +9,7 @@ export async function GET() {
   return new Response(JSON.stringify(admin.content, null, 2), {
     headers: {
       "Content-Type": "application/json",
-      "Content-Disposition": `attachment; filename="${SITE_SLUG}-content-${new Date().toISOString().slice(0, 10)}.json"`,
+      "Content-Disposition": `attachment; filename="${admin.slug}-content-${new Date().toISOString().slice(0, 10)}.json"`,
     },
   });
 }
