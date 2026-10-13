@@ -59,6 +59,17 @@ npm run dev
 
 The site shows demo content until you save your own in the admin.
 
+## Email alerts (Resend)
+
+Each new enquiry is emailed after it's saved. Replying to the email replies to the visitor.
+
+1. Sign up at https://resend.com and create an API key. Set it as `RESEND_API_KEY` (a *Secret* on Cloudflare).
+2. Choose the sender:
+   - **No domain setup:** leave `EMAIL_FROM` empty. Mail comes from `onboarding@resend.dev`, and Resend only delivers it to the email address you signed up with.
+   - **Any recipient:** in Resend, go to **Domains → Add domain** and add the DNS records it shows in Cloudflare. Then set `EMAIL_FROM` to e.g. `Leads <leads@yourdomain.com>`.
+3. Run [supabase/migrations/003_lead_email_status.sql](supabase/migrations/003_lead_email_status.sql) once, so each lead records whether its email was sent.
+4. Recipients are set per site in **Admin → Settings → Email Alerts**.
+
 ## WhatsApp Cloud API (automatic alerts)
 
 1. Go to https://developers.facebook.com, then **Create App → Business → add WhatsApp**.
@@ -111,6 +122,19 @@ The app runs on Workers through the [OpenNext adapter](https://opennext.js.org/c
 **From your machine:** `npm run deploy` (runs `wrangler login` the first time). `npm run preview` runs the Workers build locally.
 
 The worker name in `wrangler.jsonc` must match the Worker name in the dashboard.
+
+## Brand folders (per-client design)
+
+Each client can have a folder in `components/site/<slug>/`. It's picked automatically from the site's slug, which comes from the domain. Anything the folder doesn't define falls back to the shared design.
+
+| In `components/site/<slug>/` | What it does |
+|---|---|
+| `index.ts` → `defaults` | Starting theme, fonts, section order and texts. Values saved in the admin override these. |
+| `index.ts` → `sections` | Brand-only designs that replace shared sections, e.g. `sections: { hero: Hero }` with `./sections/Hero.tsx`. |
+| `index.ts` → `Header`, `Footer` | Brand-only header and footer. |
+| `styles.css` | CSS scoped to `[data-brand="<slug>"]`, so it only affects that domain. |
+
+New client: copy an existing brand folder, rename it to the slug, register it in [components/site/brands.ts](components/site/brands.ts) and add its `@import` to [components/site/brands.css](components/site/brands.css).
 
 ## Adding a new editable field
 

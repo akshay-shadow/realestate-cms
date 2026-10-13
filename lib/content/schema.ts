@@ -128,6 +128,21 @@ export const editorPages: EditorPage[] = [
     ],
   },
   {
+    key: "emailAlerts",
+    title: "Email Alerts",
+    group: "Settings",
+    description: "Every enquiry is emailed to these addresses after it's saved. Replying to the email replies to the visitor.",
+    fields: [
+      {
+        type: "boolean",
+        name: "enabled",
+        label: "Email each new enquiry",
+        help: "Needs RESEND_API_KEY in the server environment.",
+      },
+      { type: "text", name: "notifyEmails", label: "Send to (comma separated)" },
+    ],
+  },
+  {
     key: "whatsapp",
     title: "WhatsApp",
     group: "Settings",

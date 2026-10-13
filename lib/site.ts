@@ -1,5 +1,6 @@
 import { headers } from "next/headers";
 import { cache } from "react";
+import { getBrand } from "@/components/site/brands";
 import { defaultContent } from "./content/defaults";
 import type { SiteContent } from "./content/types";
 import { createPublicClient, supabaseConfigured } from "./supabase/server";
@@ -20,11 +21,17 @@ export function deepMerge<T>(base: T, override: unknown): T {
   return out as T;
 }
 
-/** Merges saved content over defaults and appends sections added in newer versions (hidden). */
-export function normalizeContent(saved: unknown): SiteContent {
-  const content = deepMerge(defaultContent, saved ?? {});
+/** Shared demo content with the brand folder's defaults (components/site/<slug>) on top. */
+export function contentDefaults(slug: string): SiteContent {
+  return deepMerge(defaultContent, getBrand(slug).defaults ?? {});
+}
+
+/** Merges saved content over the defaults and appends sections added in newer versions (hidden). */
+export function normalizeContent(saved: unknown, slug: string): SiteContent {
+  const defaults = contentDefaults(slug);
+  const content = deepMerge(defaults, saved ?? {});
   const present = new Set(content.layout.sections.map((s) => s.key));
-  const missing = defaultContent.layout.sections.filter((s) => !present.has(s.key)).map((s) => ({ ...s, enabled: false }));
+  const missing = defaults.layout.sections.filter((s) => !present.has(s.key)).map((s) => ({ ...s, enabled: false }));
   if (missing.length) content.layout = { ...content.layout, sections: [...content.layout.sections, ...missing] };
   return content;
 }
@@ -54,7 +61,7 @@ const getRequestHost = cache(async (): Promise<{ host: string | null; url: strin
 /** Loads the site for the requested domain, falling back to DEFAULT_SITE_SLUG, then to demo defaults. */
 export const getSite = cache(async (): Promise<Site> => {
   const { host, url } = await getRequestHost();
-  if (!supabaseConfigured) return { id: null, slug: DEFAULT_SITE_SLUG, url, onOwnDomain: false, content: defaultContent };
+  if (!supabaseConfigured) return { id: null, slug: DEFAULT_SITE_SLUG, url, onOwnDomain: false, content: contentDefaults(DEFAULT_SITE_SLUG) };
 
   const db = createPublicClient();
   let data: { id: string; slug: string; content: unknown } | null = null;
@@ -71,11 +78,12 @@ export const getSite = cache(async (): Promise<Site> => {
     data = res.data;
   }
 
+  const slug = data?.slug ?? DEFAULT_SITE_SLUG;
   return {
     id: data?.id ?? null,
-    slug: data?.slug ?? DEFAULT_SITE_SLUG,
+    slug,
     url,
     onOwnDomain,
-    content: normalizeContent(data?.content),
+    content: normalizeContent(data?.content, slug),
   };
 });

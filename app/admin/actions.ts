@@ -3,8 +3,9 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/admin";
-import { defaultContent } from "@/lib/content/defaults";
 import { getEditorPage } from "@/lib/content/schema";
+import type { SiteContent } from "@/lib/content/types";
+import { contentDefaults } from "@/lib/site";
 import { createClient } from "@/lib/supabase/server";
 
 const LEAD_STATUSES = ["new", "contacted", "site_visit", "converted", "lost"];
@@ -27,7 +28,8 @@ export async function saveSection(key: string, value: unknown) {
 
 export async function resetSection(key: string) {
   if (!getEditorPage(key)) return { error: "Unknown section" };
-  return saveSection(key, defaultContent[key as keyof typeof defaultContent]);
+  const { slug } = await requireAdmin();
+  return saveSection(key, contentDefaults(slug)[key as keyof SiteContent]);
 }
 
 /** Replace the whole content document (used by JSON import). */

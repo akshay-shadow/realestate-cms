@@ -4,12 +4,13 @@
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-09-01",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
-  // Public values only. SUPABASE_SERVICE_ROLE_KEY and WHATSAPP_TOKEN are set as
+  // Public values only. SUPABASE_SERVICE_ROLE_KEY, RESEND_API_KEY and WHATSAPP_TOKEN are set as
   // secrets in the dashboard (Settings -> Variables and Secrets).
   "vars": {
     "DEFAULT_SITE_SLUG": "demo",
     "NEXT_PUBLIC_SUPABASE_URL": "https://vwpedrtbseoueqpkudow.supabase.co",
-    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "sb_publishable_o_fWnpfeqiFy6UYdVaMQNQ_DG3c4JJr"
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "sb_publishable_o_fWnpfeqiFy6UYdVaMQNQ_DG3c4JJr",
+    "EMAIL_FROM": "Website Leads <leads@mahindrasvista.in>"
   },
   // Keep anything else set in the dashboard on each deploy.
   "keep_vars": true,

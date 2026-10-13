@@ -13,9 +13,10 @@ import { Pricing } from "@/components/site/sections/Pricing";
 import { VirtualTour } from "@/components/site/sections/VirtualTour";
 import type { SectionKey, SiteContent } from "@/lib/content/types";
 import { getSite } from "@/lib/site";
+import { getBrand } from "@/components/site/brands";
 
 
-const SECTIONS: Record<SectionKey, (p: { content: SiteContent }) => React.ReactNode> = {
+const SHARED_SECTIONS: Record<SectionKey, (p: { content: SiteContent }) => React.ReactNode> = {
   hero: Hero,
   about: About,
   highlights: Highlights,
@@ -32,7 +33,9 @@ const SECTIONS: Record<SectionKey, (p: { content: SiteContent }) => React.ReactN
 };
 
 export default async function HomePage() {
-  const { content } = await getSite();
+  const { content, slug } = await getSite();
+  // The brand folder's own section designs replace the shared ones.
+  const SECTIONS = { ...SHARED_SECTIONS, ...getBrand(slug).sections };
   return (
     <>
       {content.layout.sections

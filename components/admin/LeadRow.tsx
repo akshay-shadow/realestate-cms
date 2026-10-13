@@ -16,6 +16,7 @@ export interface Lead {
   status: string;
   notes: string | null;
   whatsapp_status: string | null;
+  email_status?: string | null;
   created_at: string;
 }
 
@@ -63,6 +64,11 @@ export function LeadRow({ lead }: { lead: Lead }) {
         {lead.whatsapp_status && (
           <p className="mt-1 max-w-[160px] truncate" title={lead.whatsapp_status}>
             WA: {lead.whatsapp_status}
+          </p>
+        )}
+        {lead.email_status && (
+          <p className="mt-1 max-w-[160px] truncate" title={lead.email_status}>
+            Email: {lead.email_status}
           </p>
         )}
       </td>

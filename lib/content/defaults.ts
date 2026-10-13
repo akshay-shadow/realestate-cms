@@ -53,6 +53,10 @@ export const defaultContent: SiteContent = {
     bodyFont: "Poppins",
     radius: "md",
   },
+  emailAlerts: {
+    enabled: true,
+    notifyEmails: "manas.reality@gmail.com, akshay.shadow@gmail.com",
+  },
   whatsapp: {
     notifyNumbers: "919876543210",
     autoSend: true,
@@ -105,7 +109,7 @@ export const defaultContent: SiteContent = {
   },
   form: {
     defaultCountryCode: "+91",
-    showEmail: false,
+    showEmail: true,
     showInterest: false,
     showMessage: false,
     consentRequired: true,

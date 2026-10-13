@@ -1,0 +1,5 @@
+/* lodha-bellevue.in only */
+[data-brand="lodha-bellevue"] h1,
+[data-brand="lodha-bellevue"] h2 {
+  font-weight: 500;
+}

@@ -41,6 +41,7 @@ create table if not exists public.leads (
                    check (status in ('new','contacted','site_visit','converted','lost')),
   notes            text,
   whatsapp_status  text,
+  email_status     text,
   created_at       timestamptz not null default now()
 );
 

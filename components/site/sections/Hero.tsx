@@ -50,7 +50,7 @@ export function Hero({ content }: { content: SiteContent }) {
                     key={i}
                     src={img.image}
                     alt={`${hero.title} ${i + 1}`}
-                    className="h-full w-full object-cover"
+                    className="h-full w-full  "
                     fetchPriority={i === 0 ? "high" : "auto"}
                     loading={i === 0 ? "eager" : "lazy"}
                   />

@@ -58,6 +58,10 @@ export interface SiteContent {
     bodyFont: string;
     radius: "none" | "sm" | "md" | "lg" | "xl";
   };
+  emailAlerts: {
+    enabled: boolean;
+    notifyEmails: string;
+  };
   whatsapp: {
     notifyNumbers: string;
     autoSend: boolean;

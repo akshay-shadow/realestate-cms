@@ -4,6 +4,8 @@ import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
 import { Tracking } from "@/components/site/Tracking";
 import { WhatsAppFloat } from "@/components/site/WhatsAppFloat";
+import { getBrand } from "@/components/site/brands";
+import "@/components/site/brands.css";
 import { getSite } from "@/lib/site";
 import { googleFontsHref, hexToRgb, RADIUS } from "@/lib/utils";
 
@@ -35,7 +37,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
-  const { content, url } = await getSite();
+  const { content, url, slug } = await getSite();
+  const brand = getBrand(slug);
+  const SiteHeader = brand.Header ?? Header;
+  const SiteFooter = brand.Footer ?? Footer;
   const t = content.theme;
   const font = (f: string) => f.replace(/[^\w\s-]/g, "");
 
@@ -77,11 +82,11 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       <style dangerouslySetInnerHTML={{ __html: css }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       <Tracking tracking={content.tracking} />
-      <div className="site min-h-screen">
+      <div className="site min-h-screen" data-brand={slug}>
         <EnquiryProvider content={content}>
-          <Header content={content} />
+          <SiteHeader content={content} />
           <main className="pt-16">{children}</main>
-          <Footer content={content} />
+          <SiteFooter content={content} />
           <WhatsAppFloat content={content} />
         </EnquiryProvider>
       </div>

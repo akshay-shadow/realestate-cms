@@ -1,0 +1,4 @@
+/* Brand stylesheets (components/site/<slug>/styles.css). Each one scopes its rules to [data-brand="<slug>"],
+   so a brand's CSS never leaks onto another domain. */
+@import "./mahindra-vista/styles.css";
+@import "./lodha-bellevue/styles.css";
