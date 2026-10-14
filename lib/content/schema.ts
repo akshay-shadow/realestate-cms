@@ -298,6 +298,7 @@ export const editorPages: EditorPage[] = [
     title: "Footer",
     group: "Settings",
     fields: [
+      { type: "color", name: "textColor", label: "Footer text color", help: "Leave empty to use the muted text color." },
       { type: "textarea", name: "about", label: "About text" },
       { type: "textarea", name: "reraNote", label: "RERA note" },
       { type: "textarea", name: "advertiser", label: "Authorised advertiser / channel partner line" },

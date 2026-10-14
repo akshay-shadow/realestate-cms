@@ -222,6 +222,7 @@ export interface SiteContent {
     image: string;
   };
   footer: {
+    textColor: string;
     about: string;
     reraNote: string;
     advertiser: string;

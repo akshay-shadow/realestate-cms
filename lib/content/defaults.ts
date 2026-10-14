@@ -290,6 +290,7 @@ export const defaultContent: SiteContent = {
     image: "",
   },
   footer: {
+    textColor: "",
     about: "",
     reraNote: "Project registered under Government of India RERA Act 2016.",
     advertiser: "Authorised Advertiser: Your Realty Pvt Ltd, Registration No.: A00000000000",
