@@ -1,11 +1,12 @@
 import type { Brand } from "../brands";
 import { Amenities } from "./sections/Amenities";
+import { Location } from "./sections/Location";
 
 // mahindrasvista.in
 // Add brand-specific designs in ./sections and register them under `sections`,
 // e.g. `sections: { hero: Hero }`.
 export const mahindraVista: Brand = {
-  sections: { amenities: Amenities },
+  sections: { amenities: Amenities, location: Location },
   defaults: {
     brand: { name: "Mahindra Vista", developer: "Mahindra Lifespaces" },
     seo: { title: "Mahindra Vista | New Launch Homes" },
