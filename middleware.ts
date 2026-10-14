@@ -1,11 +1,25 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-// Refreshes the Supabase session and guards /admin routes.
+/** Same-site path to return to after login, or null if `next` is missing or unsafe. */
+function safeNext(next: string | null) {
+  return next && next.startsWith("/") && !next.startsWith("//") ? next : null;
+}
+
+// Refreshes the Supabase session, guards /admin routes, and tells pages their
+// path (x-pathname) so a private site can send visitors back after login.
 export async function middleware(request: NextRequest) {
+  const { pathname, search } = request.nextUrl;
+  request.headers.set("x-pathname", pathname + search);
   let response = NextResponse.next({ request });
 
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return response;
+  }
+
+  const isAdmin = pathname.startsWith("/admin");
+  // Public pages only need the session refreshed for people who are logged in.
+  if (!isAdmin && !request.cookies.getAll().some((c) => c.name.startsWith("sb-"))) {
     return response;
   }
 
@@ -30,21 +44,24 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const isLogin = request.nextUrl.pathname.startsWith("/admin/login");
+  if (!isAdmin) return response;
+
+  const isLogin = pathname.startsWith("/admin/login");
   if (!user && !isLogin) {
     const url = request.nextUrl.clone();
     url.pathname = "/admin/login";
+    url.search = "";
     return NextResponse.redirect(url);
   }
   if (user && isLogin) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/admin";
-    return NextResponse.redirect(url);
+    const next = safeNext(request.nextUrl.searchParams.get("next")) ?? "/admin";
+    return NextResponse.redirect(new URL(next, request.url));
   }
 
   return response;
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  // Everything except static files and the lead API.
+  matcher: ["/((?!_next/static|_next/image|api/|favicon.ico|robots.txt|sitemap.xml|.*\\.(?:png|jpe?g|gif|webp|svg|ico|css|js|woff2?)$).*)"],
 };

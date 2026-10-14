@@ -29,6 +29,12 @@ export default async function DashboardPage() {
   ]);
 
   const checks = [
+    {
+      ok: content.visibility.isPublic,
+      label: content.visibility.isPublic
+        ? "Website is live"
+        : "Website is private (admins only). Turn it on in Settings → Visibility when ready",
+    },
     { ok: Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY), label: "Service role key set (required to save leads)" },
     {
       ok: !content.whatsapp.autoSend || whatsappApiConfigured,

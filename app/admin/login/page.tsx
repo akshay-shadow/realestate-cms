@@ -24,8 +24,15 @@ export default function LoginPage() {
       setLoading(false);
       return;
     }
-    router.replace("/admin");
-    router.refresh();
+    // Back to the page that sent us here (e.g. a private site), else the admin.
+    const next = new URLSearchParams(window.location.search).get("next");
+    const dest = next && next.startsWith("/") && !next.startsWith("//") ? next : "/admin";
+    if (dest.startsWith("/admin")) {
+      router.replace(dest);
+      router.refresh();
+    } else {
+      window.location.assign(dest);
+    }
   }
 
   return (

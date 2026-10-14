@@ -73,7 +73,14 @@ export const editorPages: EditorPage[] = [
     fields: [
       { type: "text", name: "name", label: "Project / Brand name" },
       { type: "text", name: "tagline", label: "Tagline" },
-      { type: "media", name: "logo", label: "Logo", accept: "image", help: "Leave empty to show the name as text." },
+      {
+        type: "media",
+        name: "logo",
+        label: "Main logo (left of menu)",
+        accept: "image",
+        help: "Leave empty to show the name as text.",
+      },
+      { type: "media", name: "projectLogo", label: "Project logo (right of menu)", accept: "image", help: "Optional." },
       { type: "media", name: "favicon", label: "Favicon", accept: "image" },
       { type: "text", name: "phone", label: "Phone number" },
       { type: "text", name: "email", label: "Email" },
@@ -84,6 +91,14 @@ export const editorPages: EditorPage[] = [
       { type: "url", name: "reraUrl", label: "RERA website link" },
       { type: "media", name: "reraQr", label: "RERA QR code", accept: "image" },
     ],
+  },
+  {
+    key: "visibility",
+    title: "Visibility",
+    group: "Settings",
+    description:
+      "While the website isn't live, visitors are sent to the login page and only this site's admins can view it. Turn it on when the site is ready.",
+    fields: [{ type: "boolean", name: "isPublic", label: "Website is live (visible to everyone)" }],
   },
   {
     key: "seo",
@@ -111,6 +126,7 @@ export const editorPages: EditorPage[] = [
       { type: "color", name: "ink", label: "Main text color" },
       { type: "color", name: "muted", label: "Muted text color" },
       { type: "color", name: "heading", label: "Section heading color" },
+      { type: "color", name: "navText", label: "Menu text color", help: "Leave empty to use the main text color." },
       { type: "font", name: "headingFont", label: "Heading font", help: "Any Google Font name works." },
       { type: "font", name: "bodyFont", label: "Body font" },
       {

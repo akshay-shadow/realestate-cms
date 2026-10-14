@@ -18,6 +18,7 @@ const config: Config = {
         ink: v("ink"),
         muted: v("muted"),
         heading: v("heading"),
+        nav: v("nav"),
       },
       fontFamily: {
         heading: ["var(--font-heading)", "serif"],

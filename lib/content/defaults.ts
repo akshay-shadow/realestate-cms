@@ -17,10 +17,15 @@ const IMG = {
 // Demo content shown until the admin saves real values. Saved values are
 // deep-merged on top of this, so new fields always have a safe fallback.
 export const defaultContent: SiteContent = {
+  // New sites stay private (admins only) until switched live in Settings -> Visibility.
+  visibility: {
+    isPublic: false,
+  },
   brand: {
     name: "Skyline Residences",
     tagline: "Luxury 2, 3 & 4 BHK Homes",
     logo: "",
+    projectLogo: "",
     favicon: "",
     phone: "+91 98765 43210",
     email: "sales@skylineresidences.com",
@@ -49,6 +54,7 @@ export const defaultContent: SiteContent = {
     ink: "#F3F4F6",
     muted: "#A3B0C2",
     heading: "#E0B46A",
+    navText: "",
     headingFont: "Poppins",
     bodyFont: "Poppins",
     radius: "md",

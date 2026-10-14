@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import { EnquiryProvider } from "@/components/site/EnquiryProvider";
 import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
@@ -6,6 +8,7 @@ import { Tracking } from "@/components/site/Tracking";
 import { WhatsAppFloat } from "@/components/site/WhatsAppFloat";
 import { getBrand } from "@/components/site/brands";
 import "@/components/site/brands.css";
+import { viewerAccess } from "@/lib/admin";
 import { getSite } from "@/lib/site";
 import { googleFontsHref, hexToRgb, RADIUS } from "@/lib/utils";
 
@@ -18,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: seo.description,
     keywords: seo.keywords,
     alternates: { canonical: "/" },
-    robots: seo.noindex ? { index: false, follow: false } : undefined,
+    robots: seo.noindex || !content.visibility.isPublic ? { index: false, follow: false } : undefined,
     icons: brand.favicon ? { icon: brand.favicon } : undefined,
     openGraph: {
       type: "website",
@@ -37,7 +40,19 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
-  const { content, url, slug } = await getSite();
+  const { content, url, slug, id } = await getSite();
+  const isPreview = !content.visibility.isPublic;
+
+  // Private site: only this site's admins may see it.
+  if (isPreview) {
+    const access = await viewerAccess(id);
+    if (access === "anonymous") {
+      const path = (await headers()).get("x-pathname") ?? "/";
+      redirect(`/admin/login?next=${encodeURIComponent(path)}`);
+    }
+    if (access === "other") return <NotPublicYet />;
+  }
+
   const brand = getBrand(slug);
   const SiteHeader = brand.Header ?? Header;
   const SiteFooter = brand.Footer ?? Footer;
@@ -54,6 +69,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
 --c-ink:${hexToRgb(t.ink)};
 --c-muted:${hexToRgb(t.muted, "107 114 128")};
 --c-heading:${hexToRgb(t.heading || t.ink)};
+--c-nav:${hexToRgb(t.navText || t.ink)};
 --font-heading:"${font(t.headingFont)}",Georgia,serif;
 --font-body:"${font(t.bodyFont)}",system-ui,sans-serif;
 --radius:${RADIUS[t.radius] ?? "10px"};
@@ -81,7 +97,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       )}
       <style dangerouslySetInnerHTML={{ __html: css }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
-      <Tracking tracking={content.tracking} />
+      {!isPreview && <Tracking tracking={content.tracking} />}
       <div className="site min-h-screen" data-brand={slug}>
         <EnquiryProvider content={content}>
           <SiteHeader content={content} />
@@ -89,7 +105,29 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
           <SiteFooter content={content} />
           <WhatsAppFloat content={content} />
         </EnquiryProvider>
+        {isPreview && (
+          <a
+            href="/admin/content/visibility"
+            className="fixed bottom-4 left-4 z-[60] rounded-full bg-amber-400 px-3 py-1.5 text-xs font-semibold text-black shadow-lg"
+          >
+            Preview · not public yet
+          </a>
+        )}
       </div>
     </>
+  );
+}
+
+function NotPublicYet() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-slate-100 p-4 text-center">
+      <div>
+        <h1 className="text-lg font-bold text-slate-900">This website isn&apos;t public yet</h1>
+        <p className="mt-2 text-sm text-slate-600">Your account doesn&apos;t have access to preview it.</p>
+        <a href="/admin" className="mt-4 inline-block text-sm text-indigo-600 underline">
+          Go to admin
+        </a>
+      </div>
+    </div>
   );
 }

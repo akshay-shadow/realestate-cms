@@ -38,13 +38,10 @@ export function Header({ content }: { content: SiteContent }) {
 
         <nav className="hidden items-center gap-5 text-[13px] font-medium xl:flex">
           {nav.links.map((l) => (
-            <a key={l.href + l.label} href={href(l.href)} onClick={(e) => onNav(e, l.href)} className="text-ink/85 hover:text-primary">
+            <a key={l.href + l.label} href={href(l.href)} onClick={(e) => onNav(e, l.href)} className="text-nav hover:text-primary">
               {l.label}
             </a>
           ))}
-        </nav>
-
-        <div className="flex items-center gap-2">
           {brand.phone && (
             <a
               href={`tel:${brand.phone.replace(/\s/g, "")}`}
@@ -56,7 +53,11 @@ export function Header({ content }: { content: SiteContent }) {
               Contact
             </a>
           )}
-          {waNumber && (
+        </nav>
+
+        <div className="flex items-center gap-2">
+          
+          {/* {waNumber && (
             <a
               href={waLink(waNumber, whatsapp.floatingMessage)}
               target="_blank"
@@ -65,8 +66,12 @@ export function Header({ content }: { content: SiteContent }) {
             >
               <WhatsAppIcon size={16} /> WhatsApp
             </a>
+          )} */}
+          {brand.projectLogo && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={brand.projectLogo} alt={`${brand.name} project logo`} className="h-9 w-auto md:h-10" />
           )}
-          <button className="p-2 xl:hidden" onClick={() => setMenu(!menu)} aria-label="Menu" aria-expanded={menu}>
+          <button className="p-2 text-nav xl:hidden" onClick={() => setMenu(!menu)} aria-label="Menu" aria-expanded={menu}>
             <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
               {menu ? <path d="M6 6l12 12M6 18L18 6" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
             </svg>
@@ -77,7 +82,7 @@ export function Header({ content }: { content: SiteContent }) {
       {menu && (
         <nav className="container-x flex flex-col border-t border-ink/10 pb-4 xl:hidden">
           {nav.links.map((l) => (
-            <a key={l.href + l.label} href={href(l.href)} onClick={(e) => onNav(e, l.href)} className="border-b border-ink/5 py-3 text-sm font-medium">
+            <a key={l.href + l.label} href={href(l.href)} onClick={(e) => onNav(e, l.href)} className="border-b border-ink/5 py-3 text-sm font-medium text-nav hover:text-primary">
               {l.label}
             </a>
           ))}

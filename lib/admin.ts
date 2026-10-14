@@ -55,3 +55,21 @@ export async function requireAdmin() {
   if (!admin.ok) throw new Error(admin.reason);
   return admin;
 }
+
+/** Who's viewing: an admin of this site, another logged-in user, or nobody logged in. */
+export async function viewerAccess(siteId: string | null): Promise<"admin" | "other" | "anonymous"> {
+  if (!supabaseConfigured) return "admin";
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return "anonymous";
+  if (!siteId) return "other";
+  const { data } = await supabase
+    .from("site_admins")
+    .select("site_id")
+    .eq("site_id", siteId)
+    .eq("user_id", user.id)
+    .maybeSingle();
+  return data ? "admin" : "other";
+}

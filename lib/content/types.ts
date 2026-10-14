@@ -23,10 +23,14 @@ export interface StatItem {
 }
 
 export interface SiteContent {
+  visibility: {
+    isPublic: boolean;
+  };
   brand: {
     name: string;
     tagline: string;
     logo: string;
+    projectLogo: string;
     favicon: string;
     phone: string;
     email: string;
@@ -54,6 +58,7 @@ export interface SiteContent {
     ink: string;
     muted: string;
     heading: string;
+    navText: string;
     headingFont: string;
     bodyFont: string;
     radius: "none" | "sm" | "md" | "lg" | "xl";
