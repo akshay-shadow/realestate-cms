@@ -32,7 +32,7 @@ export function Footer({ content }: { content: SiteContent }) {
             )}
             {brand.rera && (
               <p>
-                Project Registration No.: <span className="font-semibold text-ink">{brand.rera}</span>
+                Project Registration {/[|,]/.test(brand.rera) ? "Nos." : "No."}: <span className="font-semibold">{brand.rera}</span>
               </p>
             )}
             {footer.advertiser && <p>{footer.advertiser}</p>}
