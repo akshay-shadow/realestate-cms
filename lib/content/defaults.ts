@@ -20,16 +20,17 @@ export const defaultContent: SiteContent = {
   // New sites stay private (admins only) until switched live in Settings -> Visibility.
   visibility: {
     isPublic: false,
+    previewPassword: "",
   },
   brand: {
-    name: "Skyline Residences",
-    tagline: "Luxury 2, 3 & 4 BHK Homes",
+    name: "Mahindra Vista",
+    tagline: "2, 3 & Jodi residences",
     logo: "",
     projectLogo: "",
     favicon: "",
-    phone: "+91 98765 43210",
-    email: "sales@skylineresidences.com",
-    developer: "Skyline Group",
+    phone: "+91 99208 92719",
+    email: "manas.reality@gmail.com",
+    developer: "Mahindra Group",
     location: "Near Western Express Highway, Mumbai",
     address: "Western Express Highway, Kandivali East, Mumbai",
     rera: "P51800000000",
@@ -37,10 +38,10 @@ export const defaultContent: SiteContent = {
     reraQr: "",
   },
   seo: {
-    title: "Skyline Residences | Luxury 2, 3 & 4 BHK Apartments",
+    title: "Mahindra Vista | 2, 3 & Jodi Residences",
     description:
-      "Premium 2, 3 & 4 BHK apartments with world-class amenities. Get the price sheet, floor plans and book a site visit today.",
-    keywords: "luxury apartments, 3 bhk flats, new launch project, real estate",
+      "2,3 and Jodi residences with world-class amenities. Get the price sheet, floor plans and book a site visit today.",
+    keywords: "2 bhk flats, 3 bhk flats, Jodi flats, new launch project, real estate",
     ogImage: img("photo-1545324418-cc1a3fa10c00", 1200),
     noindex: false,
   },
@@ -64,15 +65,15 @@ export const defaultContent: SiteContent = {
     notifyEmails: "manas.reality@gmail.com, akshay.shadow@gmail.com",
   },
   whatsapp: {
-    notifyNumbers: "919876543210",
+    notifyNumbers: "+919920892719",
     autoSend: true,
     redirectAfterSubmit: false,
-    redirectNumber: "919876543210",
+    redirectNumber: "+919920892719",
     messageTemplate:
       "New enquiry for {project}\nName: {name}\nPhone: {phone}\nEmail: {email}\nInterested in: {interest}\nMessage: {message}",
     floatingButton: true,
-    floatingNumber: "919876543210",
-    floatingMessage: "Hi, I'm interested in Skyline Residences. Please share details.",
+    floatingNumber: "+919920892719",
+    floatingMessage: "Hi, I'm interested in Mahindra Vista. Please share details.",
     chatBubble: true,
     chatName: "Priya",
     chatPhoto: "",
@@ -173,6 +174,7 @@ export const defaultContent: SiteContent = {
   amenities: {
     title: "Amenities At Skyline Residences",
     subtitle: "",
+    description: "",
     ctaLabel: "Download Amenities",
     items: [
       { icon: "🛍️", title: "Retail Shop", image: IMG.towers },

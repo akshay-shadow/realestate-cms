@@ -33,7 +33,9 @@ export default async function DashboardPage() {
       ok: content.visibility.isPublic,
       label: content.visibility.isPublic
         ? "Website is live"
-        : "Website is private (admins only). Turn it on in Settings → Visibility when ready",
+        : content.visibility.previewPassword
+          ? "Website is private (preview password set). Turn it live in Settings → Visibility when ready"
+          : "Website is private and has no preview password. Set one in Settings → Visibility",
     },
     { ok: Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY), label: "Service role key set (required to save leads)" },
     {

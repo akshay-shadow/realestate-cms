@@ -25,6 +25,7 @@ export interface StatItem {
 export interface SiteContent {
   visibility: {
     isPublic: boolean;
+    previewPassword: string;
   };
   brand: {
     name: string;
@@ -155,6 +156,7 @@ export interface SiteContent {
   amenities: {
     title: string;
     subtitle: string;
+    description: string;
     ctaLabel: string;
     items: { icon: string; title: string; image: string }[];
   };

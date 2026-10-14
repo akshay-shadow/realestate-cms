@@ -1,13 +1,20 @@
 import type { Brand } from "../brands";
+import { Amenities } from "./sections/Amenities";
 
 // mahindrasvista.in
 // Add brand-specific designs in ./sections and register them under `sections`,
 // e.g. `sections: { hero: Hero }`.
 export const mahindraVista: Brand = {
+  sections: { amenities: Amenities },
   defaults: {
     brand: { name: "Mahindra Vista", developer: "Mahindra Lifespaces" },
     seo: { title: "Mahindra Vista | New Launch Homes" },
     hero: { layout: "fullscreen", title: "Mahindra Vista", subtitle: "By Mahindra Lifespaces" },
+    amenities: {
+      title: "Amenities at Mahindra Vista",
+      description:
+        "Thoughtfully planned spaces for every age, from a resort-style pool and fully equipped gym to landscaped gardens and dedicated play areas for children.",
+    },
     theme: {
       primary: "#C8102E",
       primaryForeground: "#FFFFFF",

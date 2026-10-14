@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { viewerAccess } from "@/lib/admin";
 import { sendLeadEmail } from "@/lib/email";
+import { canViewSite } from "@/lib/preview";
 import { getSite } from "@/lib/site";
 import { createServiceClient, supabaseConfigured } from "@/lib/supabase/server";
 import { fillTemplate, waLink } from "@/lib/utils";
@@ -47,8 +47,8 @@ export async function POST(req: Request) {
   const site = await getSite();
   const { whatsapp, emailAlerts, brand } = site.content;
 
-  // A private site only takes test enquiries from its own admins.
-  if (!site.content.visibility.isPublic && (await viewerAccess(site.id)) !== "admin")
+  // A private site only takes enquiries from people allowed to preview it.
+  if (!(await canViewSite(site)))
     return NextResponse.json({ error: "This website isn't public yet." }, { status: 403 });
 
   // One enquiry per mobile number / email per site.

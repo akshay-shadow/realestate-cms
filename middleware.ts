@@ -1,13 +1,8 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-/** Same-site path to return to after login, or null if `next` is missing or unsafe. */
-function safeNext(next: string | null) {
-  return next && next.startsWith("/") && !next.startsWith("//") ? next : null;
-}
-
 // Refreshes the Supabase session, guards /admin routes, and tells pages their
-// path (x-pathname) so a private site can send visitors back after login.
+// path (x-pathname) so a private site can send visitors back after the preview password.
 export async function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
   request.headers.set("x-pathname", pathname + search);
@@ -50,12 +45,12 @@ export async function middleware(request: NextRequest) {
   if (!user && !isLogin) {
     const url = request.nextUrl.clone();
     url.pathname = "/admin/login";
-    url.search = "";
     return NextResponse.redirect(url);
   }
   if (user && isLogin) {
-    const next = safeNext(request.nextUrl.searchParams.get("next")) ?? "/admin";
-    return NextResponse.redirect(new URL(next, request.url));
+    const url = request.nextUrl.clone();
+    url.pathname = "/admin";
+    return NextResponse.redirect(url);
   }
 
   return response;

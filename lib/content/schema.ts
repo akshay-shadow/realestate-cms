@@ -97,8 +97,16 @@ export const editorPages: EditorPage[] = [
     title: "Visibility",
     group: "Settings",
     description:
-      "While the website isn't live, visitors are sent to the login page and only this site's admins can view it. Turn it on when the site is ready.",
-    fields: [{ type: "boolean", name: "isPublic", label: "Website is live (visible to everyone)" }],
+      "While the website isn't live, visitors must enter the preview password to see it (logged-in admins skip this). Turn it live when the site is ready.",
+    fields: [
+      { type: "boolean", name: "isPublic", label: "Website is live (visible to everyone)" },
+      {
+        type: "text",
+        name: "previewPassword",
+        label: "Preview password",
+        help: "Share this with anyone who should see the site before launch. Changing it signs everyone out of the preview.",
+      },
+    ],
   },
   {
     key: "seo",
@@ -445,6 +453,12 @@ export const editorPages: EditorPage[] = [
     group: "Page Sections",
     fields: [
       ...sectionHeader,
+      {
+        type: "textarea",
+        name: "description",
+        label: "Description",
+        help: "Shown beside the slider on layouts with text on the side (e.g. Mahindra Vista).",
+      },
       {
         type: "list",
         name: "items",
