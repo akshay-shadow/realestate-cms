@@ -41,7 +41,7 @@ export function Hero({ content }: { content: SiteContent }) {
     return (
       <section id="hero" className="scroll-mt-16 bg-secondary">
         <div className="grid lg:min-h-[calc(100svh-4rem)] lg:grid-cols-[minmax(0,1fr)_400px]">
-          <div className="relative h-[46vh] min-h-[280px] overflow-hidden lg:h-auto">
+          <div className="relative aspect-[16/9] overflow-hidden lg:aspect-auto lg:h-auto">
             {images.length > 0 ? (
               <Carousel fill slideClass="w-full h-full" gap="gap-0" autoplay={5000} showCounter={false}>
                 {images.map((img, i) => (
@@ -50,7 +50,7 @@ export function Hero({ content }: { content: SiteContent }) {
                     key={i}
                     src={img.image}
                     alt={`${hero.title} ${i + 1}`}
-                    className="h-full w-full  "
+                    className="h-full w-full object-cover lg:object-fill"
                     fetchPriority={i === 0 ? "high" : "auto"}
                     loading={i === 0 ? "eager" : "lazy"}
                   />

@@ -30,7 +30,7 @@ export function Header({ content }: { content: SiteContent }) {
         <a href={isHome ? "#hero" : "/"} className="flex shrink-0 items-center gap-2">
           {brand.logo ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={brand.logo} alt={brand.name} className="h-9 w-auto md:h-10" />
+            <img src={brand.logo} alt={brand.name} className="h-9 w-auto max-w-[38vw] object-contain object-left sm:max-w-none md:h-10" />
           ) : (
             <span className="font-heading text-lg font-semibold md:text-xl">{brand.name}</span>
           )}
@@ -69,7 +69,7 @@ export function Header({ content }: { content: SiteContent }) {
           )} */}
           {brand.projectLogo && (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={brand.projectLogo} alt={`${brand.name} project logo`} className="h-9 w-auto md:h-10" />
+            <img src={brand.projectLogo} alt={`${brand.name} project logo`} className="h-9 w-auto max-w-[38vw] object-contain object-right sm:max-w-none md:h-10" />
           )}
           <button className="p-2 text-nav xl:hidden" onClick={() => setMenu(!menu)} aria-label="Menu" aria-expanded={menu}>
             <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
