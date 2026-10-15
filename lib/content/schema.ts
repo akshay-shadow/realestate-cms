@@ -93,22 +93,6 @@ export const editorPages: EditorPage[] = [
     ],
   },
   {
-    key: "visibility",
-    title: "Visibility",
-    group: "Settings",
-    description:
-      "While the website isn't live, visitors must enter the preview password to see it (logged-in admins skip this). Turn it live when the site is ready.",
-    fields: [
-      { type: "boolean", name: "isPublic", label: "Website is live (visible to everyone)" },
-      {
-        type: "text",
-        name: "previewPassword",
-        label: "Preview password",
-        help: "Share this with anyone who should see the site before launch. Changing it signs everyone out of the preview.",
-      },
-    ],
-  },
-  {
     key: "seo",
     title: "SEO",
     group: "Settings",

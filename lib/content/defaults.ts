@@ -17,11 +17,6 @@ const IMG = {
 // Demo content shown until the admin saves real values. Saved values are
 // deep-merged on top of this, so new fields always have a safe fallback.
 export const defaultContent: SiteContent = {
-  // New sites stay private (admins only) until switched live in Settings -> Visibility.
-  visibility: {
-    isPublic: false,
-    previewPassword: "",
-  },
   brand: {
     name: "Mahindra Vista",
     tagline: "2, 3 & Jodi residences",

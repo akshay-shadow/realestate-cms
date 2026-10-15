@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 import { EnquiryProvider } from "@/components/site/EnquiryProvider";
 import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
@@ -8,7 +6,6 @@ import { Tracking } from "@/components/site/Tracking";
 import { WhatsAppFloat } from "@/components/site/WhatsAppFloat";
 import { getBrand } from "@/components/site/brands";
 import "@/components/site/brands.css";
-import { canViewSite } from "@/lib/preview";
 import { getSite } from "@/lib/site";
 import { googleFontsHref, hexToRgb, RADIUS } from "@/lib/utils";
 
@@ -21,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: seo.description,
     keywords: seo.keywords,
     alternates: { canonical: "/" },
-    robots: seo.noindex || !content.visibility.isPublic ? { index: false, follow: false } : undefined,
+    robots: seo.noindex ? { index: false, follow: false } : undefined,
     icons: brand.favicon ? { icon: brand.favicon } : undefined,
     openGraph: {
       type: "website",
@@ -40,15 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
-  const site = await getSite();
-  const { content, url, slug } = site;
-  const isPreview = !content.visibility.isPublic;
-
-  // Private site: preview password or a logged-in admin of this site.
-  if (isPreview && !(await canViewSite(site))) {
-    const path = (await headers()).get("x-pathname") ?? "/";
-    redirect(`/site-login?next=${encodeURIComponent(path)}`);
-  }
+  const { content, url, slug } = await getSite();
 
   const brand = getBrand(slug);
   const SiteHeader = brand.Header ?? Header;
@@ -94,7 +83,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       )}
       <style dangerouslySetInnerHTML={{ __html: css }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
-      {!isPreview && <Tracking tracking={content.tracking} />}
+      <Tracking tracking={content.tracking} />
       <div className="site min-h-screen" data-brand={slug}>
         <EnquiryProvider content={content}>
           <SiteHeader content={content} />
@@ -102,11 +91,6 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
           <SiteFooter content={content} />
           <WhatsAppFloat content={content} />
         </EnquiryProvider>
-        {isPreview && (
-          <p className="pointer-events-none fixed bottom-4 left-4 z-[60] rounded-full bg-amber-400 px-3 py-1.5 text-xs font-semibold text-black shadow-lg">
-            Preview · not public yet
-          </p>
-        )}
       </div>
     </>
   );

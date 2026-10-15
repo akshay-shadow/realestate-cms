@@ -23,10 +23,6 @@ export interface StatItem {
 }
 
 export interface SiteContent {
-  visibility: {
-    isPublic: boolean;
-    previewPassword: string;
-  };
   brand: {
     name: string;
     tagline: string;
