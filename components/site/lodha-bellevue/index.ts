@@ -1,41 +1,84 @@
 import type { Brand } from "../brands";
+import { About } from "./sections/About";
+import { Amenities } from "./sections/Amenities";
+import { Developer } from "./sections/Developer";
+import { FloorPlans } from "./sections/FloorPlans";
+import { Gallery } from "./sections/Gallery";
+import { Hero } from "./sections/Hero";
+import { Highlights } from "./sections/Highlights";
+import { Location } from "./sections/Location";
+import { Pricing } from "./sections/Pricing";
 
 // lodha-bellevue.in
-// Add brand-specific designs in ./sections and register them under `sections`,
-// e.g. `sections: { hero: Hero }`.
+// Page structure follows the Mahalaxmi Bellevue reference: banner slider, intro,
+// developer story, residences, plans, price table, amenities, gallery, location.
 export const lodhaBellevue: Brand = {
+  sections: {
+    hero: Hero,
+    about: About,
+    developer: Developer,
+    highlights: Highlights,
+    floorPlans: FloorPlans,
+    pricing: Pricing,
+    amenities: Amenities,
+    gallery: Gallery,
+    location: Location,
+  },
   defaults: {
     brand: { name: "Lodha Bellevue", developer: "Lodha Group" },
     seo: { title: "Lodha Bellevue | Luxury Residences" },
     hero: { layout: "split", title: "Lodha Bellevue", subtitle: "By Lodha Group" },
+    developer: {
+      title: "About Lodha Group",
+      name: "Lodha Group",
+      logo: "",
+      readMoreUrl: "",
+      stats: [],
+      description:
+        "Lodha is one of India's leading real estate developers, known for landmark residences across Mumbai and a commitment to quality, design and on-time delivery.",
+    },
+    pricing: { ctaLabel: "Price Breakup" },
+    location: { note: "*Travel times are approximate and depend on traffic." },
+    nav: {
+      links: [
+        { label: "About", href: "#about" },
+        { label: "Plans", href: "#floorPlans" },
+        { label: "Prices", href: "#pricing" },
+        { label: "Amenities", href: "#amenities" },
+        { label: "Location", href: "#location" },
+        { label: "Gallery", href: "#gallery" },
+      ],
+    },
+    // Light cream / gold look of the Mahalaxmi Bellevue reference.
     theme: {
-      primary: "#B8975A",
-      primaryForeground: "#0E1A2B",
-      secondary: "#0E1A2B",
-      accent: "#B8975A",
-      surface: "#0E1A2B",
-      surfaceAlt: "#15253B",
-      ink: "#EEF1F5",
-      muted: "#9AA8BA",
-      heading: "#D9BE84",
-      headingFont: "Playfair Display",
-      bodyFont: "Lato",
+      primary: "#A0873A",
+      primaryForeground: "#FFFFFF",
+      secondary: "#FFFFFF",
+      accent: "#A0873A",
+      surface: "#FFFFFF",
+      surfaceAlt: "#FCF8EA",
+      ink: "#2E2E2E",
+      muted: "#6B6B6B",
+      heading: "#2E2E2E",
+      navText: "#2E2E2E",
+      headingFont: "Cormorant Garamond",
+      bodyFont: "Jost",
       radius: "none",
     },
     layout: {
       sections: [
         { key: "hero", enabled: true },
         { key: "about", enabled: true },
-        { key: "gallery", enabled: true },
-        { key: "amenities", enabled: true },
+        { key: "developer", enabled: true },
+        { key: "highlights", enabled: true },
         { key: "floorPlans", enabled: true },
         { key: "pricing", enabled: true },
-        { key: "virtualTour", enabled: true },
+        { key: "amenities", enabled: true },
+        { key: "gallery", enabled: true },
         { key: "location", enabled: true },
-        { key: "emi", enabled: true },
-        { key: "developer", enabled: true },
         { key: "contact", enabled: true },
-        { key: "highlights", enabled: false },
+        { key: "virtualTour", enabled: false },
+        { key: "emi", enabled: false },
         { key: "faq", enabled: false },
       ],
     },

@@ -333,6 +333,7 @@ export const editorPages: EditorPage[] = [
         fields: [{ type: "media", name: "image", label: "Image", accept: "image" }],
       },
       { type: "text", name: "eyebrow", label: "Small text above title" },
+      { type: "textarea", name: "headline", label: "Banner headline", help: "Big text in the banner panel on layouts that use it (e.g. Lodha Bellevue: 80% Open Spaces. 100% Happiness)." },
       { type: "text", name: "title", label: "Title (project name)" },
       { type: "textarea", name: "subtitle", label: "Subtitle (e.g. By Developer)" },
       { type: "text", name: "configText", label: "Configuration text (e.g. Luxurious 2, 3 & 4 BHK)" },
@@ -395,6 +396,7 @@ export const editorPages: EditorPage[] = [
     group: "Page Sections",
     fields: [
       ...sectionHeader,
+      { type: "textarea", name: "description", label: "Description", help: "Shown under the title on layouts that use it (e.g. Lodha Bellevue)." },
       {
         type: "list",
         name: "items",
@@ -415,6 +417,7 @@ export const editorPages: EditorPage[] = [
     group: "Page Sections",
     fields: [
       ...sectionHeader,
+      { type: "textarea", name: "description", label: "Description", help: "Shown beside the table on layouts that use it (e.g. Lodha Bellevue)." },
       {
         type: "list",
         name: "items",
@@ -483,6 +486,7 @@ export const editorPages: EditorPage[] = [
     group: "Page Sections",
     fields: [
       ...sectionHeader,
+      { type: "textarea", name: "description", label: "Description", help: "Shown beside the plans on layouts that use it (e.g. Lodha Bellevue)." },
       { type: "boolean", name: "lockBehindForm", label: "Blur plans until visitor submits the form" },
       { type: "text", name: "ctaLabel", label: "Button label (opens form)" },
       {
@@ -526,6 +530,7 @@ export const editorPages: EditorPage[] = [
         ],
       },
       { type: "text", name: "ctaLabel", label: "Button label (opens form)" },
+      { type: "textarea", name: "note", label: "Note below the list", help: "e.g. Travel times are approximate." },
     ],
   },
   {
@@ -567,6 +572,7 @@ export const editorPages: EditorPage[] = [
       { type: "text", name: "title", label: "Section title" },
       { type: "text", name: "name", label: "Developer name" },
       { type: "media", name: "logo", label: "Developer logo", accept: "image" },
+      { type: "media", name: "image", label: "Side image", accept: "image", help: "Shown beside the text on layouts that use it (e.g. Lodha Bellevue)." },
       { type: "textarea", name: "description", label: "Description" },
       { type: "url", name: "readMoreUrl", label: "“Read more” link (optional)" },
       {

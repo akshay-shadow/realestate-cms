@@ -129,6 +129,7 @@ export const defaultContent: SiteContent = {
   },
   hero: {
     layout: "split",
+    headline: "",
     images: [{ image: IMG.towers }, { image: IMG.house }, { image: IMG.villa }],
     eyebrow: "New Launch",
     title: "Skyline Residences",
@@ -157,6 +158,7 @@ export const defaultContent: SiteContent = {
   highlights: {
     title: "Highlights Of Skyline Residences",
     subtitle: "",
+    description: "",
     image: IMG.modern,
     ctaLabel: "Request Brochure",
     items: [
@@ -185,6 +187,7 @@ export const defaultContent: SiteContent = {
   pricing: {
     title: "Price Of Skyline Residences",
     subtitle: "",
+    description: "",
     note: "*Prices are indicative and subject to change. Taxes extra.",
     priceSheetLabel: "Price Sheet",
     ctaLabel: "Get Details",
@@ -197,6 +200,7 @@ export const defaultContent: SiteContent = {
   floorPlans: {
     title: "Site & Floor Plan Of Skyline Residences",
     subtitle: "",
+    description: "",
     lockBehindForm: true,
     ctaLabel: "Download Floor Plan",
     items: [
@@ -226,6 +230,7 @@ export const defaultContent: SiteContent = {
     mapEmbedUrl: "https://maps.google.com/maps?q=Kandivali%20East%20Mumbai&z=13&output=embed",
     image: "",
     ctaLabel: "Request Location Details",
+    note: "",
     nearby: [
       { category: "Connectivity", place: "Western Express Highway", distance: "7 mins" },
       { category: "Connectivity", place: "Metro Station", distance: "7 mins" },
@@ -259,6 +264,7 @@ export const defaultContent: SiteContent = {
     title: "About Skyline Group",
     name: "Skyline Group",
     logo: "",
+    image: "",
     description:
       "With over 25 years of excellence, Skyline Group has delivered 40+ landmark projects and 25,000+ happy families across 7 cities, known for design, quality and timely delivery.",
     readMoreUrl: "",

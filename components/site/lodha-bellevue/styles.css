@@ -1,4 +1,16 @@
-/* lodha-bellevue.in only */
+/* lodha-bellevue.in only: thin gold outline buttons, as on the reference site. */
+[data-brand="lodha-bellevue"] .btn-primary {
+  background: transparent;
+  border: 1px solid rgb(var(--c-primary));
+  color: rgb(var(--c-primary));
+  font-weight: 500;
+  padding: 0.55rem 1.25rem;
+}
+[data-brand="lodha-bellevue"] .btn-primary:hover {
+  background: rgb(var(--c-primary));
+  color: rgb(var(--c-primary-fg));
+  filter: none;
+}
 [data-brand="lodha-bellevue"] h1,
 [data-brand="lodha-bellevue"] h2 {
   font-weight: 500;

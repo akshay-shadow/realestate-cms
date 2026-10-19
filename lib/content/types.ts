@@ -110,6 +110,7 @@ export interface SiteContent {
   };
   hero: {
     layout: "split" | "fullscreen";
+    headline: string;
     images: { image: string }[];
     eyebrow: string;
     title: string;
@@ -137,6 +138,7 @@ export interface SiteContent {
   highlights: {
     title: string;
     subtitle: string;
+    description: string;
     image: string;
     ctaLabel: string;
     items: { title: string; description: string }[];
@@ -144,6 +146,7 @@ export interface SiteContent {
   pricing: {
     title: string;
     subtitle: string;
+    description: string;
     note: string;
     priceSheetLabel: string;
     ctaLabel: string;
@@ -165,6 +168,7 @@ export interface SiteContent {
   floorPlans: {
     title: string;
     subtitle: string;
+    description: string;
     lockBehindForm: boolean;
     ctaLabel: string;
     items: { category: string; title: string; area: string; image: string }[];
@@ -175,6 +179,7 @@ export interface SiteContent {
     mapEmbedUrl: string;
     image: string;
     ctaLabel: string;
+    note: string;
     nearby: { category: string; place: string; distance: string }[];
   };
   virtualTour: {
@@ -197,6 +202,7 @@ export interface SiteContent {
     title: string;
     name: string;
     logo: string;
+    image: string;
     description: string;
     readMoreUrl: string;
     stats: StatItem[];
