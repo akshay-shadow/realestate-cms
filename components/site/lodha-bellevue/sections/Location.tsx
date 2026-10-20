@@ -16,13 +16,16 @@ export function Location({ content }: { content: SiteContent }) {
   return (
     <section id="location" className="section bg-surface-alt">
       <div className="container-x">
-        {location.title && <h2 className="mb-8 text-center font-heading text-2xl text-heading md:text-3xl">{location.title}</h2>}
+        <div className="mx-auto mb-8 max-w-3xl text-center">
+          {location.title && <h2 className="font-heading text-2xl text-heading md:text-3xl">{location.title}</h2>}
+          {location.description && <p className="mt-4 whitespace-pre-line text-sm leading-relaxed text-muted">{location.description}</p>}
+        </div>
         <div className={hasMap ? "grid items-center gap-8 md:grid-cols-2 md:gap-12" : "mx-auto max-w-2xl"}>
           {hasMap && (
-            <div className="aspect-[4/3] overflow-hidden bg-surface ring-1 ring-ink/10">
+            <div className={location.image ? "overflow-hidden ring-1 ring-ink/10" : "aspect-[4/3] overflow-hidden bg-surface ring-1 ring-ink/10"}>
               {location.image ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={location.image} alt="Location map" loading="lazy" className="h-full w-full object-cover" />
+                <img src={location.image} alt="Location map" loading="lazy" className="block h-auto w-full" />
               ) : (
                 <iframe
                   src={location.mapEmbedUrl}

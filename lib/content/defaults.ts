@@ -116,6 +116,10 @@ export const defaultContent: SiteContent = {
     showMessage: false,
     consentRequired: true,
     interestOptions: [{ label: "2 BHK" }, { label: "3 BHK" }, { label: "4 BHK" }],
+    namePlaceholder: "Name",
+    phonePlaceholder: "Mobile Number",
+    emailPlaceholder: "Email Address",
+    interestPlaceholder: "Interested in",
     submitLabel: "Get It Now",
     consentText: "I consent to the use of provided data in accordance with the privacy policy and to be contacted via call, SMS or WhatsApp.",
     successTitle: "Thank you!",
@@ -153,6 +157,7 @@ export const defaultContent: SiteContent = {
     body:
       "Skyline Residences is a thoughtfully crafted 10-acre township offering spacious 2, 3 and 4 BHK residences with expansive views and abundant natural light.\n\nResidents enjoy an urban forest, pet park, walking and cycling tracks, kids' play areas, sports courts, a yoga deck and swimming pools, all minutes from the Western Express Highway, metro stations, schools, hospitals and malls.",
     image: "",
+    ctaLabel: "",
     stats: [],
   },
   highlights: {
@@ -173,6 +178,7 @@ export const defaultContent: SiteContent = {
     subtitle: "",
     description: "",
     ctaLabel: "Download Amenities",
+    slider: [],
     items: [
       { icon: "🛍️", title: "Retail Shop", image: IMG.towers },
       { icon: "🧒", title: "Kids Play Area", image: IMG.villa },
@@ -230,6 +236,7 @@ export const defaultContent: SiteContent = {
     mapEmbedUrl: "https://maps.google.com/maps?q=Kandivali%20East%20Mumbai&z=13&output=embed",
     image: "",
     ctaLabel: "Request Location Details",
+    description: "",
     note: "",
     nearby: [
       { category: "Connectivity", place: "Western Express Highway", distance: "7 mins" },

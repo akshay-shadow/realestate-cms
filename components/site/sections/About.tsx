@@ -29,7 +29,7 @@ export function About({ content }: { content: SiteContent }) {
         </div>
         {hasImage && (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={about.image} alt={about.title} loading="lazy" className="aspect-[4/3] w-full rounded-theme object-cover" />
+          <img src={about.image} alt={about.title} loading="lazy" className="block h-auto w-full rounded-theme" />
         )}
       </div>
     </section>

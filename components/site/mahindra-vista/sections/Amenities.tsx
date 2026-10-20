@@ -21,12 +21,12 @@ export function Amenities({ content }: { content: SiteContent }) {
 
         <Carousel autoplay={4000}>
           {amenities.items.map((a, i) => (
-            <div key={i} className="relative aspect-[4/3] overflow-hidden rounded-theme bg-surface-alt">
+            <div key={i} className="relative overflow-hidden rounded-theme bg-surface-alt">
               {a.image ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={a.image} alt={a.title} loading={i === 0 ? "eager" : "lazy"} className="h-full w-full object-cover" />
+                <img src={a.image} alt={a.title} loading={i === 0 ? "eager" : "lazy"} className="block h-auto w-full" />
               ) : (
-                <span className="grid h-full place-items-center pb-8 text-7xl" aria-hidden="true">
+                <span className="grid place-items-center py-20 text-7xl" aria-hidden="true">
                   {a.icon}
                 </span>
               )}

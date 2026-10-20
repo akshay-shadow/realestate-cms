@@ -5,7 +5,7 @@ import type { SiteContent } from "@/lib/content/types";
 export function Highlights({ content }: { content: SiteContent }) {
   const { highlights } = content;
   return (
-    <section id="highlights" className="section pt-0 md:pt-0">
+    <section id="highlights" className="section">
       <div className="container-x grid max-w-5xl items-center gap-8 md:grid-cols-2 md:gap-12">
         <div className="order-2 md:order-1">
           {highlights.subtitle && <p className="eyebrow">{highlights.subtitle}</p>}
@@ -32,7 +32,7 @@ export function Highlights({ content }: { content: SiteContent }) {
         </div>
         {highlights.image && (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={highlights.image} alt={highlights.title} loading="lazy" className="order-1 aspect-[4/3] w-full object-cover md:order-2" />
+          <img src={highlights.image} alt={highlights.title} loading="lazy" className="order-1 block h-auto w-full md:order-2" />
         )}
       </div>
     </section>

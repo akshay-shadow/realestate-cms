@@ -10,10 +10,10 @@ export function Location({ content }: { content: SiteContent }) {
       <div className="container-x">
         <SectionHeading eyebrow={location.subtitle} title={location.title} />
         <div className="grid gap-8 lg:grid-cols-2">
-          <div className="aspect-[4/3] overflow-hidden rounded-theme bg-surface-alt ring-1 ring-ink/10">
+          <div className={location.image ? "overflow-hidden rounded-theme ring-1 ring-ink/10" : "aspect-[4/3] overflow-hidden rounded-theme bg-surface-alt ring-1 ring-ink/10"}>
             {location.image ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={location.image} alt="Location map" loading="lazy" className="h-full w-full object-cover" />
+              <img src={location.image} alt="Location map" loading="lazy" className="block h-auto w-full" />
             ) : (
               location.mapEmbedUrl && (
                 <iframe

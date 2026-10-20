@@ -119,7 +119,7 @@ export function EnquiryProvider({ content, children }: { content: SiteContent; c
           >
             {sideImage && (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={sideImage} alt="" className="hidden h-full w-full object-cover md:block" />
+              <img src={sideImage} alt="" className="hidden h-auto w-full self-center md:block" />
             )}
             <div className="p-6 text-center md:p-8">
               <button

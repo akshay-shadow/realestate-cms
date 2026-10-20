@@ -23,7 +23,7 @@ export function VirtualTour({ content }: { content: SiteContent }) {
     <section id="virtualTour" className="section bg-surface-alt">
       <div className="container-x max-w-5xl">
         <SectionHeading title={virtualTour.title} subtitle={virtualTour.subtitle} />
-        <div className="relative aspect-video overflow-hidden rounded-theme bg-secondary ring-1 ring-ink/10">
+        <div className={`relative overflow-hidden rounded-theme bg-secondary ring-1 ring-ink/10 ${playing || !virtualTour.image ? "aspect-video" : ""}`}>
           {playing ? (
             <iframe
               src={toEmbed(virtualTour.videoUrl)}
@@ -33,10 +33,10 @@ export function VirtualTour({ content }: { content: SiteContent }) {
               allowFullScreen
             />
           ) : (
-            <button onClick={onClick} className="group absolute inset-0 block">
+            <button onClick={onClick} className={`group block w-full ${virtualTour.image ? "relative" : "absolute inset-0"}`}>
               {virtualTour.image && (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={virtualTour.image} alt={virtualTour.title} loading="lazy" className="h-full w-full object-cover opacity-80" />
+                <img src={virtualTour.image} alt={virtualTour.title} loading="lazy" className="block h-auto w-full opacity-80" />
               )}
               <span className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/35">
                 <span className="grid h-20 w-20 place-items-center rounded-full bg-primary text-3xl text-primary-fg shadow-xl transition group-hover:scale-110">

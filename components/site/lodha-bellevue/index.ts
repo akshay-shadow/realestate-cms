@@ -1,4 +1,5 @@
 import type { Brand } from "../brands";
+import { MobileBar } from "./MobileBar";
 import { About } from "./sections/About";
 import { Amenities } from "./sections/Amenities";
 import { Developer } from "./sections/Developer";
@@ -24,6 +25,7 @@ export const lodhaBellevue: Brand = {
     gallery: Gallery,
     location: Location,
   },
+  MobileBar,
   defaults: {
     brand: { name: "Lodha Bellevue", developer: "Lodha Group" },
     seo: { title: "Lodha Bellevue | Luxury Residences" },
@@ -38,6 +40,16 @@ export const lodhaBellevue: Brand = {
         "Lodha is one of India's leading real estate developers, known for landmark residences across Mumbai and a commitment to quality, design and on-time delivery.",
     },
     pricing: { ctaLabel: "Price Breakup" },
+    about: { ctaLabel: "Enquire Now" },
+    form: {
+      showEmail: true,
+      showInterest: true,
+      interestOptions: [{ label: "3 Bed-Residences" }, { label: "4 Bed-Residences" }, { label: "5 Bed-Residences" }],
+      namePlaceholder: "Full Name",
+      phonePlaceholder: "Number",
+      emailPlaceholder: "Email id",
+      interestPlaceholder: "What are you looking for?",
+    },
     location: { note: "*Travel times are approximate and depend on traffic." },
     nav: {
       links: [
@@ -69,7 +81,7 @@ export const lodhaBellevue: Brand = {
       sections: [
         { key: "hero", enabled: true },
         { key: "about", enabled: true },
-        { key: "developer", enabled: true },
+        { key: "developer", enabled: false },
         { key: "highlights", enabled: true },
         { key: "floorPlans", enabled: true },
         { key: "pricing", enabled: true },

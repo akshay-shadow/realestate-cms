@@ -96,7 +96,15 @@ export function LeadForm({ content, source, defaultInterest, allowMessage, showB
   return (
     <form onSubmit={onSubmit} className="space-y-3 text-left">
       <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
-      <input name="name" required minLength={2} placeholder="Name" className="input" autoComplete="name" aria-label="Name" />
+      <input
+        name="name"
+        required
+        minLength={2}
+        placeholder={form.namePlaceholder || "Name"}
+        className="input"
+        autoComplete="name"
+        aria-label="Name"
+      />
       <div className="flex gap-2">
         <select name="countryCode" defaultValue={form.defaultCountryCode} className="input w-[92px] shrink-0 px-2" aria-label="Country code">
           {codes.map((c) => (
@@ -111,18 +119,18 @@ export function LeadForm({ content, source, defaultInterest, allowMessage, showB
           inputMode="tel"
           required
           pattern="[0-9\s\-]{6,15}"
-          placeholder="Mobile Number"
+          placeholder={form.phonePlaceholder || "Mobile Number"}
           className="input"
           autoComplete="tel-national"
           aria-label="Mobile number"
         />
       </div>
       {form.showEmail && (
-        <input name="email" type="email" placeholder="Email Address" className="input" autoComplete="email" aria-label="Email" />
+        <input name="email" type="email" placeholder={form.emailPlaceholder || "Email Address"} className="input" autoComplete="email" aria-label="Email" />
       )}
       {form.showInterest && form.interestOptions.length > 0 && (
         <select name="interest" defaultValue={defaultInterest ?? ""} className="input" aria-label="Interested in">
-          <option value="">Interested in</option>
+          <option value="">{form.interestPlaceholder || "Interested in"}</option>
           {form.interestOptions.map((o) => (
             <option key={o.label} value={o.label}>
               {o.label}

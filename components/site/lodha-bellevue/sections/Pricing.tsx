@@ -11,9 +11,37 @@ export function Pricing({ content }: { content: SiteContent }) {
       <div className="container-x grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-12">
         <SideIntro title={pricing.title} subtitle={pricing.subtitle} description={pricing.description} active="prices" />
 
-        <div>
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[520px] text-left text-sm">
+        <div className="min-w-0">
+          {/* Mobile: one card per configuration. */}
+          <ul className="space-y-3 sm:hidden">
+            {pricing.items.map((p, i) => (
+              <li key={`${p.type}-${i}`} className="border border-ink/10 bg-surface p-4">
+                <p className="font-heading text-lg">{p.type}</p>
+                <dl className="mt-2 space-y-1 text-sm">
+                  <div className="flex justify-between gap-3">
+                    <dt className="text-muted">Size</dt>
+                    <dd className="text-right">{p.area}</dd>
+                  </div>
+                  <div className="flex justify-between gap-3">
+                    <dt className="text-muted">Price</dt>
+                    <dd className="text-right font-semibold">{p.price}</dd>
+                  </div>
+                </dl>
+                <EnquireButton
+                  intent="pricing"
+                  interest={p.type}
+                  title={`${pricing.priceSheetLabel || "Price Breakup"} – ${p.type}`}
+                  className="mt-3 w-full border border-primary px-3 py-2 text-sm text-primary transition hover:bg-primary hover:text-primary-fg"
+                >
+                  {breakup}
+                </EnquireButton>
+              </li>
+            ))}
+          </ul>
+
+          {/* Tablet and desktop: table. */}
+          <div className="hidden overflow-x-auto sm:block">
+            <table className="w-full text-left text-sm">
               <thead className="bg-primary text-primary-fg">
                 <tr>
                   <th className="px-4 py-2.5 font-medium">Type</th>

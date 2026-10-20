@@ -26,14 +26,14 @@ export function FloorPlans({ content }: { content: SiteContent }) {
         <div className={cn("mx-auto grid gap-6", items.length === 1 ? "max-w-3xl" : "max-w-6xl sm:grid-cols-2 lg:grid-cols-3")}>
           {items.map((f, i) => (
             <div key={`${active}-${i}`} className="overflow-hidden rounded-theme bg-surface-alt ring-1 ring-ink/10">
-              <div className={cn("relative overflow-hidden bg-white", items.length === 1 ? "aspect-video" : "aspect-[4/3]")}>
+              <div className={cn("relative overflow-hidden bg-white", !f.image && "aspect-[4/3]")}>
                 {f.image && (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={f.image}
                     alt={`${f.title} plan`}
                     loading="lazy"
-                    className={cn("h-full w-full object-cover transition", locked && "scale-110 blur-md")}
+                    className={cn("block h-auto w-full transition", locked && "scale-110 blur-md")}
                   />
                 )}
                 {locked ? (

@@ -97,6 +97,10 @@ export interface SiteContent {
     showMessage: boolean;
     consentRequired: boolean;
     interestOptions: { label: string }[];
+    namePlaceholder: string;
+    phonePlaceholder: string;
+    emailPlaceholder: string;
+    interestPlaceholder: string;
     submitLabel: string;
     consentText: string;
     successTitle: string;
@@ -111,7 +115,8 @@ export interface SiteContent {
   hero: {
     layout: "split" | "fullscreen";
     headline: string;
-    images: { image: string }[];
+    /** The optional text fields fill the per-banner caption and info panel on layouts that have them (Lodha Bellevue). */
+    images: { image: string; caption?: string; headline?: string; configText?: string; priceTag?: string }[];
     eyebrow: string;
     title: string;
     subtitle: string;
@@ -133,6 +138,7 @@ export interface SiteContent {
     subtitle: string;
     body: string;
     image: string;
+    ctaLabel: string;
     stats: StatItem[];
   };
   highlights: {
@@ -158,6 +164,8 @@ export interface SiteContent {
     description: string;
     ctaLabel: string;
     items: { icon: string; title: string; image: string }[];
+    /** Slider below the amenities (Lodha Bellevue). `mobileImage` replaces `image` on phones when set. */
+    slider: { image: string; mobileImage: string; caption: string }[];
   };
   gallery: {
     title: string;
@@ -179,6 +187,7 @@ export interface SiteContent {
     mapEmbedUrl: string;
     image: string;
     ctaLabel: string;
+    description: string;
     note: string;
     nearby: { category: string; place: string; distance: string }[];
   };

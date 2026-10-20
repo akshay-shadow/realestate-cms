@@ -1,3 +1,4 @@
+import { EnquireButton } from "@/components/site/EnquireButton";
 import type { SiteContent } from "@/lib/content/types";
 
 // Lodha Bellevue: cream band with the project logo and a centred intro paragraph.
@@ -14,10 +15,15 @@ export function About({ content }: { content: SiteContent }) {
           {about.subtitle && <p className="eyebrow">{about.subtitle}</p>}
           <h2 className="font-heading text-xl text-heading md:text-2xl">{about.title}</h2>
           {about.body && <p className="mt-4 whitespace-pre-line text-sm leading-relaxed text-muted md:text-base">{about.body}</p>}
+          {about.ctaLabel && (
+            <EnquireButton title={about.ctaLabel} className="btn-primary mt-6">
+              {about.ctaLabel}
+            </EnquireButton>
+          )}
         </div>
         {about.image && (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={about.image} alt={about.title} loading="lazy" className="mt-8 aspect-[21/9] w-full object-cover md:mt-12" />
+          <img src={about.image} alt={about.title} loading="lazy" className="mt-8 block h-auto w-full md:mt-12" />
         )}
         {about.stats.length > 0 && (
           <dl className="mx-auto mt-8 grid max-w-4xl grid-cols-2 gap-6 text-center md:grid-cols-4">

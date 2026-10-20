@@ -31,7 +31,7 @@ export function Highlights({ content }: { content: SiteContent }) {
         </div>
         {highlights.image && (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={highlights.image} alt={highlights.title} loading="lazy" className="aspect-[4/3] w-full rounded-theme object-cover" />
+          <img src={highlights.image} alt={highlights.title} loading="lazy" className="block h-auto w-full rounded-theme" />
         )}
       </div>
     </section>

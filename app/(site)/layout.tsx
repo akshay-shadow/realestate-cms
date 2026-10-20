@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { EnquiryProvider } from "@/components/site/EnquiryProvider";
 import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
+import { MobileBar } from "@/components/site/MobileBar";
 import { Tracking } from "@/components/site/Tracking";
 import { WhatsAppFloat } from "@/components/site/WhatsAppFloat";
 import { getBrand } from "@/components/site/brands";
@@ -42,6 +43,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
   const brand = getBrand(slug);
   const SiteHeader = brand.Header ?? Header;
   const SiteFooter = brand.Footer ?? Footer;
+  const SiteMobileBar = brand.MobileBar ?? MobileBar;
   const t = content.theme;
   const font = (f: string) => f.replace(/[^\w\s-]/g, "");
 
@@ -90,6 +92,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
           <main className="pt-16">{children}</main>
           <SiteFooter content={content} />
           <WhatsAppFloat content={content} />
+          <SiteMobileBar content={content} />
         </EnquiryProvider>
       </div>
     </>

@@ -11,15 +11,15 @@ export function Gallery({ content }: { content: SiteContent }) {
         <h2 className="font-heading text-2xl text-primary md:text-3xl">{gallery.title}</h2>
         {gallery.subtitle && <p className="mt-1 text-sm text-muted">{gallery.subtitle}</p>}
       </div>
-      <div className="grid gap-2 sm:grid-cols-3">
+      <div className="grid items-start gap-2 sm:grid-cols-3">
         {images.map((g, i) => (
-          <a key={i} href={g.image} target="_blank" rel="noopener" className="group relative block aspect-[4/3] overflow-hidden">
+          <a key={i} href={g.image} target="_blank" rel="noopener" className="group relative block overflow-hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={g.image}
               alt={g.caption || gallery.title}
               loading="lazy"
-              className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+              className="block h-auto w-full transition duration-500 group-hover:scale-105"
             />
             {g.caption && (
               <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-4 pb-3 pt-8 text-sm text-white">

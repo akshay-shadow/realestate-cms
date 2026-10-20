@@ -40,17 +40,17 @@ export function Hero({ content }: { content: SiteContent }) {
     const images = hero.images.filter((i) => i.image);
     return (
       <section id="hero" className="scroll-mt-16 bg-secondary">
-        <div className="grid lg:min-h-[calc(100svh-4rem)] lg:grid-cols-[minmax(0,1fr)_400px]">
-          <div className="relative aspect-[16/9] overflow-hidden lg:aspect-auto lg:h-auto">
+        <div className="grid lg:grid-cols-[minmax(0,1fr)_400px]">
+          <div className="relative self-center">
             {images.length > 0 ? (
-              <Carousel fill slideClass="w-full h-full" gap="gap-0" autoplay={5000} showCounter={false}>
+              <Carousel slideClass="w-full" gap="gap-0" autoplay={5000} showCounter={false}>
                 {images.map((img, i) => (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     key={i}
                     src={img.image}
                     alt={`${hero.title} ${i + 1}`}
-                    className="h-full w-full object-cover lg:object-fill"
+                    className="block h-auto w-full"
                     fetchPriority={i === 0 ? "high" : "auto"}
                     loading={i === 0 ? "eager" : "lazy"}
                   />
@@ -59,7 +59,7 @@ export function Hero({ content }: { content: SiteContent }) {
             ) : (
               hero.image && (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={hero.image} alt={hero.title} className="absolute inset-0 h-full w-full object-cover" />
+                <img src={hero.image} alt={hero.title} className="block h-auto w-full" />
               )
             )}
           </div>

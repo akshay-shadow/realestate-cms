@@ -20,6 +20,7 @@ export async function sendLeadEmail(to: string[], lead: LeadEmail) {
     ["Name", lead.name],
     ["Phone", lead.phone],
     ["Email", lead.email],
+    ["Looking for", lead.interest],
     [
       "Date & time",
       new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata", dateStyle: "medium", timeStyle: "short" }) + " IST",

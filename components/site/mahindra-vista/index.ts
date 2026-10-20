@@ -1,4 +1,5 @@
 import type { Brand } from "../brands";
+import { MobileBar } from "./MobileBar";
 import { Amenities } from "./sections/Amenities";
 import { Location } from "./sections/Location";
 
@@ -7,6 +8,7 @@ import { Location } from "./sections/Location";
 // e.g. `sections: { hero: Hero }`.
 export const mahindraVista: Brand = {
   sections: { amenities: Amenities, location: Location },
+  MobileBar,
   defaults: {
     brand: { name: "Mahindra Vista", developer: "Mahindra Lifespaces" },
     seo: { title: "Mahindra Vista | New Launch Homes" },

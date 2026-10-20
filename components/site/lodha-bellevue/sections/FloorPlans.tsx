@@ -46,14 +46,14 @@ export function FloorPlans({ content }: { content: SiteContent }) {
           <div className="grid gap-6 sm:grid-cols-2">
             {items.map((f, i) => (
               <div key={`${active}-${i}`}>
-                <div className="relative aspect-[4/3] overflow-hidden bg-white ring-1 ring-ink/10">
+                <div className={cn("relative overflow-hidden bg-white ring-1 ring-ink/10", !f.image && "aspect-[4/3]")}>
                   {f.image && (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={f.image}
                       alt={`${f.title} plan`}
                       loading="lazy"
-                      className={cn("h-full w-full object-contain transition", locked && "scale-110 blur-md")}
+                      className={cn("block h-auto w-full transition", locked && "scale-110 blur-md")}
                     />
                   )}
                   {locked ? (

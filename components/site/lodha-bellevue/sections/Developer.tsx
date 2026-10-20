@@ -8,7 +8,7 @@ export function Developer({ content }: { content: SiteContent }) {
       <div className="container-x grid max-w-5xl items-center gap-8 md:grid-cols-2 md:gap-12">
         {developer.image ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={developer.image} alt={developer.title} loading="lazy" className="aspect-[4/3] w-full object-cover" />
+          <img src={developer.image} alt={developer.title} loading="lazy" className="block h-auto w-full" />
         ) : (
           developer.logo && (
             // eslint-disable-next-line @next/next/no-img-element

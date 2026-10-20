@@ -15,11 +15,11 @@ export function Pricing({ content }: { content: SiteContent }) {
                 intent="pricing"
                 interest={p.type}
                 title={`${pricing.priceSheetLabel || "Price Sheet"} – ${p.type}`}
-                className="group relative block aspect-[4/3] w-full overflow-hidden rounded-theme bg-surface-alt"
+                className="group relative block w-full overflow-hidden rounded-theme bg-surface-alt"
               >
                 {p.image && (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={p.image} alt={`${p.type} plan`} loading="lazy" className="h-full w-full scale-110 object-cover blur-sm" />
+                  <img src={p.image} alt={`${p.type} plan`} loading="lazy" className="block h-auto w-full scale-110 blur-sm" />
                 )}
                 <span className="absolute inset-0 grid place-items-center bg-black/30">
                   <span className="grid h-12 w-12 place-items-center rounded-full bg-white/90 text-xl text-gray-900 transition group-hover:scale-110" aria-hidden="true">

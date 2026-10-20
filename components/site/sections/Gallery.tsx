@@ -28,13 +28,13 @@ export function Gallery({ content }: { content: SiteContent }) {
         <SectionHeading eyebrow={gallery.subtitle} title={gallery.title} />
         <Carousel slideClass="w-[85%] md:w-[calc(50%-8px)]" autoplay={4500}>
           {images.map((g, i) => (
-            <button key={i} onClick={() => setActive(i)} className="group relative block aspect-[16/10] w-full overflow-hidden rounded-theme">
+            <button key={i} onClick={() => setActive(i)} className="group relative block w-full overflow-hidden rounded-theme">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={g.image}
                 alt={g.caption || gallery.title}
                 loading="lazy"
-                className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                className="block h-auto w-full transition duration-500 group-hover:scale-105"
               />
               {g.caption && (
                 <span className="absolute left-3 top-3 rounded-full bg-black/55 px-3 py-1 text-xs font-medium text-white">{g.caption}</span>

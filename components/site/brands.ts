@@ -28,4 +28,6 @@ export interface Brand {
   sections?: Partial<Record<SectionKey, SiteComponent>>;
   Header?: SiteComponent;
   Footer?: SiteComponent;
+  /** Sticky bar at the bottom of the screen on mobile. */
+  MobileBar?: SiteComponent;
 }

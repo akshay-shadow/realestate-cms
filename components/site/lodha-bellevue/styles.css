@@ -15,3 +15,26 @@
 [data-brand="lodha-bellevue"] h2 {
   font-weight: 500;
 }
+
+/* Sections alternate white / cream in page order, whatever sections are switched on. */
+[data-brand="lodha-bellevue"] main > section:nth-of-type(odd) {
+  background-color: rgb(255 255 255);
+}
+[data-brand="lodha-bellevue"] main > section:nth-of-type(even) {
+  background-color: rgb(252 248 234);
+}
+
+/* Gold footer with white text (Settings -> Footer -> text color still overrides). */
+[data-brand="lodha-bellevue"] footer {
+  background-color: rgb(160 135 58);
+  border-color: transparent;
+  color: rgb(255 255 255);
+}
+[data-brand="lodha-bellevue"] footer .text-primary,
+[data-brand="lodha-bellevue"] footer a:hover {
+  color: rgb(255 255 255);
+  text-decoration: underline;
+}
+[data-brand="lodha-bellevue"] footer .border-ink\/10 {
+  border-color: rgb(255 255 255 / 0.25);
+}
