@@ -73,8 +73,8 @@ export const lodhaBellevue: Brand = {
       muted: "#6B6B6B",
       heading: "#2E2E2E",
       navText: "#2E2E2E",
-      headingFont: "Cormorant Garamond",
-      bodyFont: "Jost",
+      headingFont: "Poppins",
+      bodyFont: "Poppins",
       radius: "none",
     },
     layout: {

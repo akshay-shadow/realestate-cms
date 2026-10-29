@@ -146,6 +146,8 @@ export interface SiteContent {
     subtitle: string;
     description: string;
     image: string;
+    /** Extra images; with more than one image in total the layout auto-slides (Lodha Bellevue). */
+    images: { image: string }[];
     ctaLabel: string;
     items: { title: string; description: string }[];
   };
@@ -189,7 +191,8 @@ export interface SiteContent {
     ctaLabel: string;
     description: string;
     note: string;
-    nearby: { category: string; place: string; distance: string }[];
+    /** `icon` is a key from LOCATION_ICONS (Lodha Bellevue connectivity grid). */
+    nearby: { category: string; place: string; distance: string; icon?: string }[];
   };
   virtualTour: {
     title: string;

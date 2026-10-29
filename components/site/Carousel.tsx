@@ -15,6 +15,7 @@ export function Carousel({
   className,
   gap = "gap-4",
   fill,
+  arrows = "sides",
 }: {
   children: React.ReactNode;
   slideClass?: string;
@@ -24,6 +25,8 @@ export function Carousel({
   gap?: string;
   /** Absolutely fill the nearest positioned parent. */
   fill?: boolean;
+  /** "below": small round outline arrows centred under the slides. */
+  arrows?: "sides" | "below";
 }) {
   const track = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
@@ -84,7 +87,22 @@ export function Carousel({
           </div>
         ))}
       </div>
-      {count > 1 && (
+      {count > 1 && arrows === "below" && (
+        <div className="mt-6 flex justify-center gap-3">
+          {(["Previous", "Next"] as const).map((label) => (
+            <button
+              key={label}
+              type="button"
+              onClick={() => go(index + (label === "Next" ? 1 : -1))}
+              className="grid h-10 w-10 place-items-center rounded-full border border-primary text-lg text-primary transition hover:bg-primary hover:text-primary-fg"
+              aria-label={label}
+            >
+              {label === "Next" ? "›" : "‹"}
+            </button>
+          ))}
+        </div>
+      )}
+      {count > 1 && arrows === "sides" && (
         <>
           <button type="button" onClick={() => go(index - 1)} className={cn(arrow, "left-2")} aria-label="Previous">
             ‹

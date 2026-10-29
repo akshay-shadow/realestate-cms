@@ -1,9 +1,11 @@
+import { Carousel } from "@/components/site/Carousel";
 import { EnquireButton } from "@/components/site/EnquireButton";
 import type { SiteContent } from "@/lib/content/types";
 
-// Lodha Bellevue: "Luxury residences" text on the left, image on the right.
+// Lodha Bellevue: text on the left; image on the right, auto-sliding when there are several.
 export function Highlights({ content }: { content: SiteContent }) {
   const { highlights } = content;
+  const images = [highlights.image, ...(highlights.images ?? []).map((i) => i.image)].filter(Boolean);
   return (
     <section id="highlights" className="section">
       <div className="container-x grid max-w-5xl items-center gap-8 md:grid-cols-2 md:gap-12">
@@ -30,9 +32,19 @@ export function Highlights({ content }: { content: SiteContent }) {
             </EnquireButton>
           )}
         </div>
-        {highlights.image && (
+        {images.length === 1 && (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={highlights.image} alt={highlights.title} loading="lazy" className="order-1 block h-auto w-full md:order-2" />
+          <img src={images[0]} alt={highlights.title} loading="lazy" className="order-1 block h-auto w-full md:order-2" />
+        )}
+        {images.length > 1 && (
+          <div className="order-1 min-w-0 md:order-2">
+            <Carousel slideClass="w-full" gap="gap-0" autoplay={4000} showCounter={false}>
+              {images.map((src, i) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img key={i} src={src} alt={`${highlights.title} ${i + 1}`} loading="lazy" className="block h-auto w-full" />
+              ))}
+            </Carousel>
+          </div>
         )}
       </div>
     </section>

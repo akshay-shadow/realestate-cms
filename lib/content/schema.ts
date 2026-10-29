@@ -1,3 +1,4 @@
+import { LOCATION_ICON_OPTIONS } from "./locationIcons";
 import type { ContentKey } from "./types";
 
 // Describes how each part of SiteContent is edited in the admin panel.
@@ -420,6 +421,14 @@ export const editorPages: EditorPage[] = [
         ],
       },
       { type: "media", name: "image", label: "Image", accept: "image" },
+      {
+        type: "list",
+        name: "images",
+        label: "More images (slider)",
+        itemLabel: "image",
+        help: "Add images to turn the picture into an auto-sliding slider (used by Lodha Bellevue). The Image above is the first slide.",
+        fields: [{ type: "media", name: "image", label: "Image", accept: "image" }],
+      },
       { type: "text", name: "ctaLabel", label: "Button label" },
     ],
   },
@@ -551,6 +560,13 @@ export const editorPages: EditorPage[] = [
           { type: "text", name: "category", label: "Category / tab" },
           { type: "text", name: "place", label: "Place" },
           { type: "text", name: "distance", label: "Distance / time" },
+          {
+            type: "select",
+            name: "icon",
+            label: "Icon",
+            options: LOCATION_ICON_OPTIONS.map((o) => ({ value: o.value, label: o.label })),
+            help: "Shown on layouts with an icon grid (e.g. Lodha Bellevue).",
+          },
         ],
       },
       { type: "text", name: "ctaLabel", label: "Button label (opens form)" },

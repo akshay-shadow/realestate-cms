@@ -45,32 +45,34 @@ export function FloorPlans({ content }: { content: SiteContent }) {
           )}
           <div className="grid gap-6 sm:grid-cols-2">
             {items.map((f, i) => (
-              <div key={`${active}-${i}`}>
-                <div className={cn("relative overflow-hidden bg-white ring-1 ring-ink/10", !f.image && "aspect-[4/3]")}>
+              <div key={`${active}-${i}`} className="overflow-hidden border border-primary/40 bg-white">
+                <div className={cn("relative overflow-hidden", !f.image && "aspect-[4/3]")}>
                   {f.image && (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={f.image}
                       alt={`${f.title} plan`}
                       loading="lazy"
-                      className={cn("block h-auto w-full transition", locked && "scale-110 blur-md")}
+                      className={cn("block h-auto w-full transition", locked && "blur-[2px]")}
                     />
                   )}
                   {locked ? (
                     <button
                       onClick={() => open({ intent: "floorplan", interest: f.title, title: `View ${f.title}` })}
                       className="absolute inset-0 grid place-items-center"
-                      aria-label={`View ${f.title}`}
+                      aria-label={`Enquire about ${f.title}`}
                     >
-                      <span className="btn-primary bg-surface">View Plan</span>
+                      <span className="bg-primary px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-primary-fg shadow-md transition hover:brightness-110">
+                        Enquire Now
+                      </span>
                     </button>
                   ) : (
                     f.image && <a href={f.image} target="_blank" rel="noopener" className="absolute inset-0" aria-label={`Open ${f.title}`} />
                   )}
                 </div>
-                <p className="mt-3 text-center font-heading text-sm">
+                <p className="bg-primary px-3 py-2.5 text-center text-sm font-semibold text-primary-fg">
                   {f.title}
-                  {f.area && <span className="text-muted"> · {f.area}</span>}
+                  {f.area && <span className="font-normal opacity-90"> · {f.area}</span>}
                 </p>
               </div>
             ))}

@@ -165,6 +165,7 @@ export const defaultContent: SiteContent = {
     subtitle: "",
     description: "",
     image: IMG.modern,
+    images: [],
     ctaLabel: "Request Brochure",
     items: [
       { title: "10 acres of township", description: "" },
